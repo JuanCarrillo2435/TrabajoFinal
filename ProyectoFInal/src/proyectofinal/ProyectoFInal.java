@@ -20,14 +20,14 @@ public class ProyectoFInal {
         CuartelData cuartel = new CuartelData();
        Cuartel c1 = new Cuartel("Santa Rita","Av. Siempre Viva 843",32,123,"+ 1555-123-4567","cuartelsantarita@gmail.com");
        Cuartel c2 = new Cuartel("San Patricio","Maipu",10,10,"+ 0800-666-4592","cuartelmaipu@gmail.com");
-        cuartel.crearCuartel(c2);
+//        cuartel.crearCuartel(c2);
         
         
 
 //---------------------------------------------
 //CREAR BRIGADAS
         BrigadaData brigada = new BrigadaData();
-//        Brigada alfa = new Brigada("Alfa","Incendios en viviendas, e industrias",true,1);
+        Brigada alfa = new Brigada(3, "Alfa","Incendios en viviendas, e industrias",true,3);
 //        
 //        brigada.crearBrigada(alfa);
 
@@ -36,11 +36,12 @@ public class ProyectoFInal {
 //CREAR BOMBEROS
 //
     BomberosData bombero = new BomberosData();
-    Bomberos b1 = new Bomberos("12112121","Pedro Picapiedra",LocalDate.of(2000,Month.APRIL,12),"2664121212",3);
+    //Bomberos b1 = new Bomberos("12112121","Pedro Picapiedra",LocalDate.of(2000,Month.APRIL,12),"2664121212",3, true);
+    Bomberos b2 = new Bomberos("42744243","El chavo del 8",LocalDate.of(2000,Month.AUGUST,28),"2664288564",3, true);
     
-//    bombero.CrearBombero(b1);
-
-
+ //  bombero.CrearBombero(b2);
+//ELIMINAR BOMBERO
+    bombero.borrarBombero(6);
 //----------------------------------------------------
 //CREAR SINIESTRO
 
@@ -76,6 +77,8 @@ public class ProyectoFInal {
     //PROBAR QUÉ CUARTEL ESTÁ MÁS CERCANO
         
         System.out.println("El cuartel más cercano es: "+cuartel.cuartelCerca(s1.getCoord_X(), s1.getCoord_Y()));
+    //PROBAR CAMBIAR BRIGADA DE CUARTEL
+    //brigada.actualizarBrigada(alfa);
     
     }
    

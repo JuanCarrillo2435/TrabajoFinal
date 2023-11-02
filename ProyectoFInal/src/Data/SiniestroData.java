@@ -47,8 +47,10 @@ public class SiniestroData {
           } catch (SQLException ex) {
              JOptionPane.showMessageDialog(null, "No se pudo agregar el siniestro");
           }
-            
-            
     }
+        public void asignarBrigada(){
+         
+        }
+        
     
 }

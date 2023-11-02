@@ -17,9 +17,6 @@ public class BomberosData {
         
         con= Conexion.getConexion();
     }
-    
-    
-    
     public void CrearBombero(Bomberos bombero){
         String sql ="INSERT INTO bombero(dni, nombre_ape, fecha_nac, celular, codBrigada) VALUES (?,?,?,?,?)";
         
@@ -45,8 +42,23 @@ public class BomberosData {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "No se a podido añadir el bombero");
             }
-        
-        
+    }
+    
+    public void borrarBombero(int id){
+        String sql = "UPDATE bombero SET estado=0 WHERE id_bombero = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setInt(1, id);
+                int f = ps.executeUpdate();
+                if (f == 1) {
+                    JOptionPane.showMessageDialog(null, "Se borró el bombero");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se encontró el bombero");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BomberosData.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
 }

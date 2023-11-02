@@ -76,13 +76,10 @@ public class CuartelData {
             
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada"+ex.getMessage());
-            
         }
     
         return cuarteles;
     }
-    
-    
     public double distancia (int c1X, int c1Y, int c2X, int c2Y){
         return Math.sqrt(Math.pow((c2X - c1X),2) + Math.pow((c2Y - c1Y),2));
     }

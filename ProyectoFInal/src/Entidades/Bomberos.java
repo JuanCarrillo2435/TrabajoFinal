@@ -10,25 +10,28 @@ public class Bomberos {
     private LocalDate fecha_nac;
     private String celular;
     private int codBrigada;
+    private boolean estado;
 
     public Bomberos() {
     }
 
-    public Bomberos(String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada) {
+    public Bomberos(String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada, boolean estado) {
         this.dni = dni;
         this.nombre_ape = nombre_ape;
         this.fecha_nac = fecha_nac;
         this.celular = celular;
         this.codBrigada = codBrigada;
+        this.estado = estado;
     }
 
-    public Bomberos(int id_bombero, String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada) {
+    public Bomberos(int id_bombero, String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada, boolean estado) {
         this.id_bombero = id_bombero;
         this.dni = dni;
         this.nombre_ape = nombre_ape;
         this.fecha_nac = fecha_nac;
         this.celular = celular;
         this.codBrigada = codBrigada;
+        this.estado = estado;
     }
 
     public int getId_bombero() {

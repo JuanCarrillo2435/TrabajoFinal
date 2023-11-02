@@ -53,16 +53,11 @@ public class BrigadaData {
         List<Brigada> disponibles = new ArrayList();
         
         String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 1";
-        
-         
         try{
-            
-        
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
             
             while(rs.next()){
-            
                 Brigada brigada = new Brigada();
                 brigada.setCodBrigada(rs.getInt("codBrigada"));
                 brigada.setNombre_br(rs.getString("nombre_br"));
@@ -72,33 +67,20 @@ public class BrigadaData {
                 disponibles.add(brigada);
             }
             ps.close();
-            
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada"+ex.getMessage());
             
         }
-    
-        
-        
         return disponibles;
     }
-    
-    
-    
+    /////////////
     public List<Brigada> brigadasNOLibres(){
         List<Brigada> noDisponibles = new ArrayList();
-        
         String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 0";
-        
-         
         try{
-            
-        
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
-            
             while(rs.next()){
-            
                 Brigada brigada = new Brigada();
                 brigada.setCodBrigada(rs.getInt("codBrigada"));
                 brigada.setNombre_br(rs.getString("nombre_br"));
@@ -108,15 +90,29 @@ public class BrigadaData {
                 noDisponibles.add(brigada);
             }
             ps.close();
-            
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada"+ex.getMessage());
-            
         }
-    
-        
-        
         return noDisponibles;
+    }
+    
+    public void actualizarBrigada(Brigada brigada){
+        String sql = "UPDATE brigada SET nro_cuartel =? WHERE codBrigada = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, brigada.getNro_cuartel());
+            ps.setInt(2, brigada.getCodBrigada());
+            
+            int f_actualizadas = ps.executeUpdate();
+            if (f_actualizadas>0) {
+                JOptionPane.showMessageDialog(null, "Brigada cambiada de cuartel con éxito");
+            }else{
+                JOptionPane.showMessageDialog(null, "Error al cambiar brigada de cuartel");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar brigada");
+        }
+        
     }
          
    
