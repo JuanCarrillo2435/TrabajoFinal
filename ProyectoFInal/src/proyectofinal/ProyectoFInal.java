@@ -17,18 +17,19 @@ public class ProyectoFInal {
         Scanner leer = new Scanner(System.in).useDelimiter("\n");
         
         //CREAR CUARTELES
-//        CuartelData cuartel = new CuartelData();
-//        Cuartel c1 = new Cuartel("Santa Rita","Av. Siempre Viva 843",32,123,"+ 1555-123-4567","cuartelsantarita@gmail.com");
-//        cuartel.crearCuartel(c1);
+        CuartelData cuartel = new CuartelData();
+       Cuartel c1 = new Cuartel("Santa Rita","Av. Siempre Viva 843",32,123,"+ 1555-123-4567","cuartelsantarita@gmail.com");
+       Cuartel c2 = new Cuartel("San Patricio","Maipu",10,10,"+ 0800-666-4592","cuartelmaipu@gmail.com");
+        cuartel.crearCuartel(c2);
         
         
 
 //---------------------------------------------
 //CREAR BRIGADAS
         BrigadaData brigada = new BrigadaData();
-        Brigada alfa = new Brigada("Alfa","Incendios en viviendas, e industrias",true,2);
-        
-        brigada.crearBrigada(alfa);
+//        Brigada alfa = new Brigada("Alfa","Incendios en viviendas, e industrias",true,1);
+//        
+//        brigada.crearBrigada(alfa);
 
 
 //-----------------------------------------------------
@@ -37,7 +38,7 @@ public class ProyectoFInal {
     BomberosData bombero = new BomberosData();
     Bomberos b1 = new Bomberos("12112121","Pedro Picapiedra",LocalDate.of(2000,Month.APRIL,12),"2664121212",3);
     
-    bombero.CrearBombero(b1);
+//    bombero.CrearBombero(b1);
 
 
 //----------------------------------------------------
@@ -45,22 +46,40 @@ public class ProyectoFInal {
 
     SiniestroData siniestro = new SiniestroData();
     Siniestro s1 = new Siniestro("Incendio de casa",LocalDate.of(2023, Month.MARCH, 11),22,76,"Exploto el horno e incendio toda la casa",LocalDate.of(2023, Month.MARCH, 12), 7,3);
-    siniestro.crearSiniestro(s1);
+//    siniestro.crearSiniestro(s1);
 
 //-------------------------------------------------------------
 //Listar Brigadas No libres
      List <Brigada> buscar = brigada.brigadasNOLibres();
-     
-        if (buscar==null) {
-            for (int i = 0; i < buscar.size(); i++) {
-                Brigada bri = buscar.get(i);
+     List <Brigada> buscar2 = brigada.brigadasLibres();
+//        if (buscar==null) {
+//            for (int i = 0; i < buscar.size(); i++) {
+//                Brigada bri = buscar.get(i);
+//                 System.out.println(bri);
+//            }
+//            
+//        } else{
+//            System.out.println("Lista nula");
+//        }
+    //LISTAR BRIGADAS LIBRES
+    if (buscar2!=null) {
+            for (int i = 0; i < buscar2.size(); i++) {
+                Brigada bri = buscar2.get(i);
                  System.out.println(bri);
             }
             
         } else{
             System.out.println("Lista nula");
         }
+    //PROBAR DISTANCIA
+        System.out.println(" La distancia entre el cuartel y el sinietro es : "+cuartel.distancia(c1.getCoord_X(), c1.getCoord_Y(), s1.getCoord_X(), s1.getCoord_Y()));
+    //PROBAR QUÉ CUARTEL ESTÁ MÁS CERCANO
+        
+        System.out.println("El cuartel más cercano es: "+cuartel.cuartelCerca(s1.getCoord_X(), s1.getCoord_Y()));
+    
     }
+   
+    
     
     
 }
