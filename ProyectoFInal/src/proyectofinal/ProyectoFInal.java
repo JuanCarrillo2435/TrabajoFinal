@@ -36,12 +36,13 @@ public class ProyectoFInal {
 //CREAR BOMBEROS
 //
     BomberosData bombero = new BomberosData();
-    //Bomberos b1 = new Bomberos("12112121","Pedro Picapiedra",LocalDate.of(2000,Month.APRIL,12),"2664121212",3, true);
-    Bomberos b2 = new Bomberos("42744243","El chavo del 8",LocalDate.of(2000,Month.AUGUST,28),"2664288564",3, true);
+    Bomberos b1 = new Bomberos(2,"12112121","Pedro RompePiedras",LocalDate.of(2000,Month.APRIL,12),"2664121333",3, true);
+//    Bomberos b2 = new Bomberos(2,"42744243","El chavo del 8",LocalDate.of(2000,Month.AUGUST,28),"2664288564",3, true);
     
  //  bombero.CrearBombero(b2);
-//ELIMINAR BOMBERO
-    bombero.borrarBombero(6);
+//Actualizar bombero
+//bombero.actualizarBombero(b1);
+    
 //----------------------------------------------------
 //CREAR SINIESTRO
 
@@ -63,20 +64,20 @@ public class ProyectoFInal {
 //            System.out.println("Lista nula");
 //        }
     //LISTAR BRIGADAS LIBRES
-    if (buscar2!=null) {
-            for (int i = 0; i < buscar2.size(); i++) {
-                Brigada bri = buscar2.get(i);
-                 System.out.println(bri);
-            }
-            
-        } else{
-            System.out.println("Lista nula");
-        }
-    //PROBAR DISTANCIA
-        System.out.println(" La distancia entre el cuartel y el sinietro es : "+cuartel.distancia(c1.getCoord_X(), c1.getCoord_Y(), s1.getCoord_X(), s1.getCoord_Y()));
-    //PROBAR QUÉ CUARTEL ESTÁ MÁS CERCANO
-        
-        System.out.println("El cuartel más cercano es: "+cuartel.cuartelCerca(s1.getCoord_X(), s1.getCoord_Y()));
+//    if (buscar2!=null) {
+//            for (int i = 0; i < buscar2.size(); i++) {
+//                Brigada bri = buscar2.get(i);
+//                 System.out.println(bri);
+//            }
+//            
+//        } else{
+//            System.out.println("Lista nula");
+//        }
+//    //PROBAR DISTANCIA
+//        System.out.println(" La distancia entre el cuartel y el sinietro es : "+cuartel.distancia(c1.getCoord_X(), c1.getCoord_Y(), s1.getCoord_X(), s1.getCoord_Y()));
+//    //PROBAR QUÉ CUARTEL ESTÁ MÁS CERCANO
+//        
+//        System.out.println("El cuartel más cercano es: "+cuartel.cuartelCerca(s1.getCoord_X(), s1.getCoord_Y()));
     //PROBAR CAMBIAR BRIGADA DE CUARTEL
     //brigada.actualizarBrigada(alfa);
     

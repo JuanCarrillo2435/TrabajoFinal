@@ -18,7 +18,7 @@ public class BomberosData {
         con= Conexion.getConexion();
     }
     public void CrearBombero(Bomberos bombero){
-        String sql ="INSERT INTO bombero(dni, nombre_ape, fecha_nac, celular, codBrigada) VALUES (?,?,?,?,?)";
+        String sql ="INSERT INTO bombero(dni, nombre_ape, fecha_nac, celular, codBrigada), estado VALUES (?,?,?,?,?,?)";
         
             try {
                 PreparedStatement ps = con.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
@@ -28,6 +28,7 @@ public class BomberosData {
                 ps.setDate(3, Date.valueOf(bombero.getFecha_nac()));
                 ps.setString(4, bombero.getCelular());
                 ps.setInt(5, bombero.getCodBrigada());
+                ps.setBoolean(6, bombero.isEstado());
                 
                 ps.executeUpdate();
                 
@@ -44,14 +45,38 @@ public class BomberosData {
             }
     }
     
-    public void borrarBombero(int id){
-        String sql = "UPDATE bombero SET estado=0 WHERE id_bombero = ?";
+    public void bajarBombero(Bomberos bombero){
+        String sql = "UPDATE bombero SET estado= false WHERE id_bombero = ?";
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
-                ps.setInt(1, id);
+                ps.setBoolean(1, bombero.isEstado() );
+                ps.setInt(2, bombero.getId_bombero());
                 int f = ps.executeUpdate();
                 if (f == 1) {
-                    JOptionPane.showMessageDialog(null, "Se borró el bombero");
+                    JOptionPane.showMessageDialog(null, "El estado fue cambiado");
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se encontró el bombero");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BomberosData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    
+    public void actualizarBombero(Bomberos bombero){
+        String sql = "UPDATE bombero SET dni = ?,nombre_ape = ?,fecha_nac = ?,celular = ?,codBrigada = ? WHERE id_bombero = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, bombero.getDni());
+                ps.setString(2, bombero.getNombre_ape());
+                ps.setDate(3, Date.valueOf(bombero.getFecha_nac()));
+                ps.setString(4, bombero.getCelular());
+                ps.setInt(5, bombero.getCodBrigada());
+                ps.setInt(6, bombero.getId_bombero());
+                int f = ps.executeUpdate();
+                if (f == 1) {
+                    JOptionPane.showMessageDialog(null, "El bombero fue actualizado con exito");
                     
                 }else{
                     JOptionPane.showMessageDialog(null, "No se encontró el bombero");

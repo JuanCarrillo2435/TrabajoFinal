@@ -82,5 +82,14 @@ public class Bomberos {
         this.codBrigada = codBrigada;
     }
     
+    
     //falta ToString
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
 }
