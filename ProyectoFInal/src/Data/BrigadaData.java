@@ -49,9 +49,40 @@ public class BrigadaData {
     }
     
     
-    public void brigadasLibres(Brigada brigada){
+    public List<Brigada> brigadasLibres(){
+        List<Brigada> disponibles = new ArrayList();
         
+        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 1";
+        
+         
+        try{
+            
+        
+         PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+         ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+            
+                Brigada brigada = new Brigada();
+                brigada.setCodBrigada(rs.getInt("codBrigada"));
+                brigada.setNombre_br(rs.getString("nombre_br"));
+                brigada.setEspecialidad(rs.getString("especialidad"));
+                brigada.setLibre(rs.getBoolean("libre"));
+                brigada.setNro_cuartel(rs.getInt("nro_cuartel"));
+                disponibles.add(brigada);
+            }
+            ps.close();
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada"+ex.getMessage());
+            
+        }
+    
+        
+        
+        return disponibles;
     }
+    
     
     
     public List<Brigada> brigadasNOLibres(){
@@ -74,7 +105,7 @@ public class BrigadaData {
                 brigada.setEspecialidad(rs.getString("especialidad"));
                 brigada.setLibre(rs.getBoolean("libre"));
                 brigada.setNro_cuartel(rs.getInt("nro_cuartel"));
-                   
+                noDisponibles.add(brigada);
             }
             ps.close();
             
