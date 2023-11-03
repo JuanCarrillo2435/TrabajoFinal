@@ -9,7 +9,7 @@ public class Brigada {
     private String especialidad;
     private boolean libre;
     private int nro_cuartel;
-
+   //AGREGAR CUARTEL
     public Brigada() {
     }
 
@@ -66,6 +66,11 @@ public class Brigada {
 
     public void setNro_cuartel(int nro_cuartel) {
         this.nro_cuartel = nro_cuartel;
+    }
+
+    @Override
+    public String toString() {
+        return "Brigada{" + "codBrigada=" + codBrigada + ", nombre_br=" + nombre_br + ", especialidad=" + especialidad + ", libre=" + libre + ", nro_cuartel=" + nro_cuartel + '}';
     }
     
     

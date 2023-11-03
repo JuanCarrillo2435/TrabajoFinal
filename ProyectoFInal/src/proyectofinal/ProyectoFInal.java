@@ -27,9 +27,9 @@ public class ProyectoFInal {
 //---------------------------------------------
 //CREAR BRIGADAS
         BrigadaData brigada = new BrigadaData();
-        Brigada alfa = new Brigada(3, "Alfa","Incendios en viviendas, e industrias",true,3);
+        Brigada alfa = new Brigada("Gama","Incendios en industrias y fábricas",true,3);
 //        
-//        brigada.crearBrigada(alfa);
+//     brigada.crearBrigada(alfa);
 
 
 //-----------------------------------------------------
@@ -46,17 +46,17 @@ public class ProyectoFInal {
 //Listar Bomberos
 
 
- List<Bomberos> listar = bombero.listarBomberos();
- 
-        if (listar !=null) {
-            for (int i = 0; i < listar.size(); i++) {
-                Bomberos bom = listar.get(i);
-                System.out.println(bom);
-            
-            }
-        }else{
-            System.out.println("Lista nula");
-        }
+// List<Bomberos> listar = bombero.listarBomberos();
+// 
+//        if (listar !=null) {
+//            for (int i = 0; i < listar.size(); i++) {
+//                Bomberos bom = listar.get(i);
+//                System.out.println(bom);
+//            
+//            }
+//        }else{
+//            System.out.println("Lista nula");
+//        }
  
 // listar.forEach(bom -> {System.out.println(bom);});
         
@@ -65,8 +65,26 @@ public class ProyectoFInal {
 //CREAR SINIESTRO
 
     SiniestroData siniestro = new SiniestroData();
-    Siniestro s1 = new Siniestro("Incendio de casa",LocalDate.of(2023, Month.MARCH, 11),22,76,"Exploto el horno e incendio toda la casa",LocalDate.of(2023, Month.MARCH, 12), 7,3);
-//    siniestro.crearSiniestro(s1);
+    Siniestro s1 = new Siniestro("Incendio de planta induestrial",LocalDate.of(2023, Month.MARCH, 11),22,76,"Cortocircuito");
+    //Siniestro s1 = new Siniestro(LocalDate.of(2023, Month.AUGUST, 12), 7,3);
+    siniestro.crearSiniestro(s1);
+    Siniestro s2 = new Siniestro(s1.getCodigo() ,LocalDate.of(2023, Month.AUGUST, 12), 7, 4);
+    //PROBANDO ACTUALIZAR SINIESTRO
+  //  siniestro.completarSiniestro(s2);
+   
+   //LISTAR SINIESTROS NO LIBRES
+   List<Siniestro> buscarSin = siniestro.listarSiniestrosNOResueltos();
+   List<Siniestro> buscarCon = siniestro.listarSiniestrosResueltos();
+   
+   if (buscarCon!=null) {
+            for (int i = 0; i < buscarCon.size(); i++) {
+                Siniestro sin = buscarCon.get(i);
+                 System.out.println(sin);
+            }
+            
+        } else{
+            System.out.println("Lista nula");
+        }
 
 //-------------------------------------------------------------
 //Listar Brigadas No libres

@@ -11,7 +11,7 @@ public class Bomberos {
     private String celular;
     private int codBrigada;
     private boolean estado;
-
+//AGREGAR
     public Bomberos() {
     }
 
@@ -83,7 +83,7 @@ public class Bomberos {
     }
     
     
-    //falta ToString
+   
 
     public boolean isEstado() {
         return estado;
@@ -92,4 +92,10 @@ public class Bomberos {
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "Bomberos{" + "id_bombero=" + id_bombero + ", dni=" + dni + ", nombre_ape=" + nombre_ape + ", fecha_nac=" + fecha_nac + ", celular=" + celular + ", codBrigada=" + codBrigada + ", estado=" + estado + '}';
+    }
+    
 }

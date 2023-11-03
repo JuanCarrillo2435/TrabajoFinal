@@ -13,7 +13,7 @@ public class Siniestro {
     private LocalDate fecha_resol;
     private int puntuacion;
     private int codBrigada;
-
+//MODIFICAR
     public Siniestro() {
     }
 
@@ -40,14 +40,22 @@ public class Siniestro {
         this.codBrigada = codBrigada;
     }
 
-    public Siniestro(int codigo, String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle) {
-        this.codigo = codigo;
+    public Siniestro(String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle) {
+       
         this.tipo = tipo;
         this.fecha_siniestro = fecha_siniestro;
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
         this.detalle = detalle;
     }
+
+    public Siniestro(int codigo, LocalDate fecha_resol, int puntuacion, int codBrigada) {
+        this.codigo = codigo;
+        this.fecha_resol = fecha_resol;
+        this.puntuacion = puntuacion;
+        this.codBrigada = codBrigada;
+    }
+    
     
     
 
@@ -121,6 +129,11 @@ public class Siniestro {
 
     public void setCodBrigada(int codBrigada) {
         this.codBrigada = codBrigada;
+    }
+
+    @Override
+    public String toString() {
+        return "Siniestro{" + "codigo=" + codigo + ", tipo=" + tipo + ", fecha_siniestro=" + fecha_siniestro + ", coord_X=" + coord_X + ", coord_Y=" + coord_Y + ", detalle=" + detalle + ", fecha_resol=" + fecha_resol + ", puntuacion=" + puntuacion + ", codBrigada=" + codBrigada + '}';
     }
     
     
