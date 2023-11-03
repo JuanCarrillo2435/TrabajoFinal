@@ -40,6 +40,17 @@ public class Siniestro {
         this.codBrigada = codBrigada;
     }
 
+    public Siniestro(int codigo, String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle) {
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.fecha_siniestro = fecha_siniestro;
+        this.coord_X = coord_X;
+        this.coord_Y = coord_Y;
+        this.detalle = detalle;
+    }
+    
+    
+
     public int getCodigo() {
         return codigo;
     }

@@ -3,6 +3,8 @@ package Data;
 import Conexiones.Conexion;
 import Entidades.Bomberos;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -85,5 +87,30 @@ public class BomberosData {
                 Logger.getLogger(BomberosData.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
+    
+    public List<Bomberos> listarBomberos(){
+        List<Bomberos> listar = new ArrayList(); 
+        String sql ="SELECT id_bombero, dni, nombre_ape, fecha_nac, celular, codBrigada FROM bombero WHERE estado = 1";
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    Bomberos bombero = new Bomberos();
+                    bombero.setId_bombero(rs.getInt("id_bombero"));
+                    bombero.setDni(rs.getString("dni"));
+                    bombero.setNombre_ape(rs.getString("nombre_ape"));
+                    bombero.setFecha_nac(rs.getDate("fecha_nac").toLocalDate());
+                    bombero.setCelular(rs.getString("celular"));
+                    bombero.setCodBrigada(rs.getInt("codBrigada"));
+                    listar.add(bombero);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla de bomberos");
+            }
+        
+        
+    return listar;    
+    }
+          
     
 }

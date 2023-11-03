@@ -42,6 +42,24 @@ public class ProyectoFInal {
  //  bombero.CrearBombero(b2);
 //Actualizar bombero
 //bombero.actualizarBombero(b1);
+
+//Listar Bomberos
+
+
+ List<Bomberos> listar = bombero.listarBomberos();
+ 
+        if (listar !=null) {
+            for (int i = 0; i < listar.size(); i++) {
+                Bomberos bom = listar.get(i);
+                System.out.println(bom);
+            
+            }
+        }else{
+            System.out.println("Lista nula");
+        }
+ 
+// listar.forEach(bom -> {System.out.println(bom);});
+        
     
 //----------------------------------------------------
 //CREAR SINIESTRO
