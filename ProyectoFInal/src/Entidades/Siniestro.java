@@ -12,12 +12,12 @@ public class Siniestro {
     private String detalle;
     private LocalDate fecha_resol;
     private int puntuacion;
-    private int codBrigada;
+    private Brigada codBrigada;
 //MODIFICAR
     public Siniestro() {
     }
 
-    public Siniestro(String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle, LocalDate fecha_resol, int puntuacion, int codBrigada) {
+    public Siniestro(String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle, LocalDate fecha_resol, int puntuacion, Brigada codBrigada) {
         this.tipo = tipo;
         this.fecha_siniestro = fecha_siniestro;
         this.coord_X = coord_X;
@@ -28,7 +28,7 @@ public class Siniestro {
         this.codBrigada = codBrigada;
     }
 
-    public Siniestro(int codigo, String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle, LocalDate fecha_resol, int puntuacion, int codBrigada) {
+    public Siniestro(int codigo, String tipo, LocalDate fecha_siniestro, int coord_X, int coord_Y, String detalle, LocalDate fecha_resol, int puntuacion, Brigada codBrigada) {
         this.codigo = codigo;
         this.tipo = tipo;
         this.fecha_siniestro = fecha_siniestro;
@@ -49,7 +49,7 @@ public class Siniestro {
         this.detalle = detalle;
     }
 
-    public Siniestro(int codigo, LocalDate fecha_resol, int puntuacion, int codBrigada) {
+    public Siniestro(int codigo, LocalDate fecha_resol, int puntuacion, Brigada codBrigada) {
         this.codigo = codigo;
         this.fecha_resol = fecha_resol;
         this.puntuacion = puntuacion;
@@ -123,11 +123,11 @@ public class Siniestro {
         this.puntuacion = puntuacion;
     }
 
-    public int getCodBrigada() {
+    public Brigada getCodBrigada() {
         return codBrigada;
     }
 
-    public void setCodBrigada(int codBrigada) {
+    public void setCodBrigada(Brigada codBrigada) {
         this.codBrigada = codBrigada;
     }
 

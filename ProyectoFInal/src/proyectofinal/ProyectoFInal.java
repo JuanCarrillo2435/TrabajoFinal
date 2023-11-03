@@ -67,7 +67,7 @@ public class ProyectoFInal {
     SiniestroData siniestro = new SiniestroData();
     Siniestro s1 = new Siniestro("Incendio de planta induestrial",LocalDate.of(2023, Month.MARCH, 11),22,76,"Cortocircuito");
     //Siniestro s1 = new Siniestro(LocalDate.of(2023, Month.AUGUST, 12), 7,3);
-    siniestro.crearSiniestro(s1);
+    //siniestro.crearSiniestro(s1);
     Siniestro s2 = new Siniestro(s1.getCodigo() ,LocalDate.of(2023, Month.AUGUST, 12), 7, 4);
     //PROBANDO ACTUALIZAR SINIESTRO
   //  siniestro.completarSiniestro(s2);

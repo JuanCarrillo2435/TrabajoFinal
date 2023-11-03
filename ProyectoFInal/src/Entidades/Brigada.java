@@ -8,19 +8,19 @@ public class Brigada {
     private String nombre_br;
     private String especialidad;
     private boolean libre;
-    private int nro_cuartel;
+    private Cuartel nro_cuartel;
    //AGREGAR CUARTEL
     public Brigada() {
     }
 
-    public Brigada(String nombre_br, String especialidad, boolean libre, int nro_cuartel) {
+    public Brigada(String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel) {
         this.nombre_br = nombre_br;
         this.especialidad = especialidad;
         this.libre = libre;
         this.nro_cuartel = nro_cuartel;
     }
 
-    public Brigada(int codBrigada, String nombre_br, String especialidad, boolean libre, int nro_cuartel) {
+    public Brigada(int codBrigada, String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel) {
         this.codBrigada = codBrigada;
         this.nombre_br = nombre_br;
         this.especialidad = especialidad;
@@ -60,11 +60,11 @@ public class Brigada {
         this.libre = libre;
     }
 
-    public int getNro_cuartel() {
+    public Cuartel getNro_cuartel() {
         return nro_cuartel;
     }
 
-    public void setNro_cuartel(int nro_cuartel) {
+    public void setNro_cuartel(Cuartel nro_cuartel) {
         this.nro_cuartel = nro_cuartel;
     }
 

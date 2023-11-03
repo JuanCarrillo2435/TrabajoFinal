@@ -9,13 +9,13 @@ public class Bomberos {
     private String nombre_ape;
     private LocalDate fecha_nac;
     private String celular;
-    private int codBrigada;
+    private Brigada codBrigada;
     private boolean estado;
 //AGREGAR
     public Bomberos() {
     }
 
-    public Bomberos(String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada, boolean estado) {
+    public Bomberos(String dni, String nombre_ape, LocalDate fecha_nac, String celular, Brigada codBrigada, boolean estado) {
         this.dni = dni;
         this.nombre_ape = nombre_ape;
         this.fecha_nac = fecha_nac;
@@ -24,7 +24,7 @@ public class Bomberos {
         this.estado = estado;
     }
 
-    public Bomberos(int id_bombero, String dni, String nombre_ape, LocalDate fecha_nac, String celular, int codBrigada, boolean estado) {
+    public Bomberos(int id_bombero, String dni, String nombre_ape, LocalDate fecha_nac, String celular, Brigada codBrigada, boolean estado) {
         this.id_bombero = id_bombero;
         this.dni = dni;
         this.nombre_ape = nombre_ape;
@@ -74,11 +74,11 @@ public class Bomberos {
         this.celular = celular;
     }
 
-    public int getCodBrigada() {
+    public Brigada getCodBrigada() {
         return codBrigada;
     }
 
-    public void setCodBrigada(int codBrigada) {
+    public void setCodBrigada(Brigada codBrigada) {
         this.codBrigada = codBrigada;
     }
     

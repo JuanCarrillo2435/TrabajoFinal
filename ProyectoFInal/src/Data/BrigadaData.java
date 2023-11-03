@@ -86,7 +86,7 @@ public class BrigadaData {
                 brigada.setNombre_br(rs.getString("nombre_br"));
                 brigada.setEspecialidad(rs.getString("especialidad"));
                 brigada.setLibre(rs.getBoolean("libre"));
-                brigada.setNro_cuartel(rs.getInt("nro_cuartel"));
+                brigada.setNro_cuartel(rs.);
                 noDisponibles.add(brigada);
             }
             ps.close();
@@ -95,7 +95,7 @@ public class BrigadaData {
         }
         return noDisponibles;
     }
-    
+    //método para cambiar estado
     public void actualizarBrigada(Brigada brigada){
         String sql = "UPDATE brigada SET nro_cuartel =? WHERE codBrigada = ?";
         try {
