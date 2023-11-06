@@ -2,6 +2,7 @@ package Data;
 
 import Conexiones.Conexion;
 import Entidades.Bomberos;
+import Entidades.Brigada;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class BomberosData {
                 ps.setString(2, bombero.getNombre_ape());
                 ps.setDate(3, Date.valueOf(bombero.getFecha_nac()));
                 ps.setString(4, bombero.getCelular());
-                ps.setInt(5, bombero.getCodBrigada());
+                ps.setInt(5, bombero.getCodBrigada().getCodBrigada());
                 ps.setBoolean(6, bombero.isEstado());
                 
                 ps.executeUpdate();
@@ -74,7 +75,7 @@ public class BomberosData {
                 ps.setString(2, bombero.getNombre_ape());
                 ps.setDate(3, Date.valueOf(bombero.getFecha_nac()));
                 ps.setString(4, bombero.getCelular());
-                ps.setInt(5, bombero.getCodBrigada());
+                ps.setInt(5, bombero.getCodBrigada().getCodBrigada());
                 ps.setInt(6, bombero.getId_bombero());
                 int f = ps.executeUpdate();
                 if (f == 1) {
@@ -101,7 +102,11 @@ public class BomberosData {
                     bombero.setNombre_ape(rs.getString("nombre_ape"));
                     bombero.setFecha_nac(rs.getDate("fecha_nac").toLocalDate());
                     bombero.setCelular(rs.getString("celular"));
-                    bombero.setCodBrigada(rs.getInt("codBrigada"));
+                    
+                    Brigada bri = new Brigada();
+                    bri.setCodBrigada(rs.getInt("codBrigada"));
+                    bombero.setCodBrigada(bri);
+                  //  bombero.setCodBrigada(rs.getInt("codBrigada"));
                     listar.add(bombero);
                 }
             } catch (SQLException ex) {

@@ -133,7 +133,7 @@ public class Siniestro {
 
     @Override
     public String toString() {
-        return "Siniestro{" + "codigo=" + codigo + ", tipo=" + tipo + ", fecha_siniestro=" + fecha_siniestro + ", coord_X=" + coord_X + ", coord_Y=" + coord_Y + ", detalle=" + detalle + ", fecha_resol=" + fecha_resol + ", puntuacion=" + puntuacion + ", codBrigada=" + codBrigada + '}';
+        return "Siniestro{" + "codigo=" + codigo + ", tipo=" + tipo + ", fecha_siniestro=" + fecha_siniestro + ", coord_X=" + coord_X + ", coord_Y=" + coord_Y + ", detalle=" + detalle + ", fecha_resol=" + fecha_resol + ", puntuacion=" + puntuacion + ", codBrigada=" + codBrigada.getCodBrigada() + '}';
     }
     
     

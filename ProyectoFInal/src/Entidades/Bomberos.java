@@ -95,7 +95,7 @@ public class Bomberos {
 
     @Override
     public String toString() {
-        return "Bomberos{" + "id_bombero=" + id_bombero + ", dni=" + dni + ", nombre_ape=" + nombre_ape + ", fecha_nac=" + fecha_nac + ", celular=" + celular + ", codBrigada=" + codBrigada + ", estado=" + estado + '}';
+        return "Bomberos{" + "id_bombero=" + id_bombero + ", dni=" + dni + ", nombre_ape=" + nombre_ape + ", fecha_nac=" + fecha_nac + ", celular=" + celular + ", codBrigada=" + codBrigada.getCodBrigada();
     }
     
 }

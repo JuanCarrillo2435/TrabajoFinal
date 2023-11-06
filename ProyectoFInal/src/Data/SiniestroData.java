@@ -1,6 +1,7 @@
 package Data;
 
 import Conexiones.Conexion;
+import Entidades.Brigada;
 import Entidades.Siniestro;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
 public class SiniestroData {
     
       private Connection con = null;
-
+//      private Brigada brigada = null;
 
     public SiniestroData() {
         
@@ -56,7 +57,7 @@ public class SiniestroData {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setDate(1, Date.valueOf(siniestro.getFecha_resol()));
                 ps.setInt(2, siniestro.getPuntuacion());
-                ps.setInt(3, siniestro.getCodBrigada());
+                ps.setInt(3, siniestro.getCodBrigada().getCodBrigada());
                 ps.setInt(4, siniestro.getCodigo());
                
                 int f = ps.executeUpdate();
@@ -69,7 +70,7 @@ public class SiniestroData {
             }
         }
 
-        public List<Siniestro> listarSiniestrosResueltos(){
+       public List<Siniestro> listarSiniestrosResueltos(){
             List<Siniestro> siniestros = new ArrayList<>();
             String sql = "SELECT * FROM siniestro WHERE puntuacion > 0";
           try {
@@ -85,7 +86,11 @@ public class SiniestroData {
                   s.setDetalle(rs.getString("detalles"));
                   s.setFecha_resol(rs.getDate("fecha_resol").toLocalDate());
                   s.setPuntuacion(rs.getInt("puntuacion"));
-                  s.setCodBrigada(rs.getInt("codBrigada"));
+                  
+                  Brigada brigada = new Brigada();
+                  brigada.setCodBrigada(rs.getInt("codBrigada"));
+                  // s.setCodBrigada(rs.getInt("codBrigada"));
+                  s.setCodBrigada(brigada);
                   siniestros.add(s);
               }
               ps.close();
@@ -104,7 +109,10 @@ public class SiniestroData {
               ResultSet rs = ps.executeQuery();
               while(rs.next()){
                   Siniestro s = new Siniestro();
-                  s.setCodBrigada(rs.getInt("codigo"));
+                  //s.setCodBrigada(rs.getInt("codigo"));
+                  Brigada brigada = new Brigada();
+                  brigada.setCodBrigada(rs.getInt("codBrigada"));
+                  s.setCodBrigada(brigada);
                   s.setFecha_siniestro(rs.getDate("fecha_siniestro").toLocalDate());
                   s.setCoord_X(rs.getInt("coord_X"));
                   s.setCoord_Y(rs.getInt("coord_Y"));

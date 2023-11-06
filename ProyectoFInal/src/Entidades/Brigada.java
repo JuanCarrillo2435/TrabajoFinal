@@ -9,7 +9,7 @@ public class Brigada {
     private String especialidad;
     private boolean libre;
     private Cuartel nro_cuartel;
-   //AGREGAR CUARTEL
+  
     public Brigada() {
     }
 
@@ -70,7 +70,7 @@ public class Brigada {
 
     @Override
     public String toString() {
-        return "Brigada{" + "codBrigada=" + codBrigada + ", nombre_br=" + nombre_br + ", especialidad=" + especialidad + ", libre=" + libre + ", nro_cuartel=" + nro_cuartel + '}';
+        return  "codBrigada=" + codBrigada + ", nombre_br=" + nombre_br + ", especialidad=" + especialidad + ", libre=" + libre + ", nro_cuartel=" + nro_cuartel.getCodCuartel();
     }
     
     
