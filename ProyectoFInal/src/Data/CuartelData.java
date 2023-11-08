@@ -46,6 +46,34 @@ public class CuartelData {
             JOptionPane.showMessageDialog(null, "Hubo un error al crear un cuartel");
         }
 }
+    
+    
+    public void actualizarCuartel(Cuartel cuartel){
+        String sql = "UPDATE cuartel SET nombre_cuartel = ?, direccion = ?, coord_X = ?, coord_Y = ?, telefono = ?, correo = ? WHERE codCuartel = ?";
+        
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cuartel.getNombre_cuartel());
+            ps.setString(2, cuartel.getDireccion());
+            ps.setInt(3, cuartel.getCoord_X());
+            ps.setInt(4, cuartel.getCoord_Y());
+            ps.setString(5, cuartel.getTelefono());
+            ps.setString(6, cuartel.getCorreo());
+            ps.setInt(7, cuartel.getCodCuartel());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El cuartel no existe");
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno "+ex.getMessage());
+        }
+    }
+    
+    
     public Cuartel buscarCuartel(int cod){
         String sql ="SELECT * FROM cuartel WHERE codCuartel=?;";
         Cuartel cuartel = new Cuartel(); 
