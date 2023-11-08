@@ -46,6 +46,37 @@ public class CuartelData {
             JOptionPane.showMessageDialog(null, "Hubo un error al crear un cuartel");
         }
 }
+    public Cuartel buscarCuartel(int cod){
+        String sql ="SELECT * FROM cuartel WHERE codCuartel=?;";
+        Cuartel cuartel = new Cuartel(); 
+        
+        try{
+            
+        PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1,cod);
+        ResultSet rs = ps.executeQuery();
+           
+        if (rs.next()){
+            cuartel.setCodCuartel(rs.getInt("codCuartel"));
+            cuartel.setNombre_cuartel(rs.getString("nombre_cuartel"));
+            cuartel.setDireccion(rs.getString("direccion"));
+            cuartel.setCoord_X(rs.getInt("coord_X"));
+            cuartel.setCoord_Y(rs.getInt("coord_Y"));
+            cuartel.setTelefono(rs.getString("telefono"));
+            cuartel.setCorreo(rs.getString("correo"));
+                
+        }else {
+                JOptionPane.showMessageDialog(null, "No existe el cuartel");
+               }
+        ps.close();
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel"+ex.getMessage());
+        }
+    
+        return cuartel;
+    
+    }
     
     public List<Cuartel> listarCuarteles(){
         List<Cuartel> cuarteles = new ArrayList();
@@ -75,7 +106,7 @@ public class CuartelData {
             ps.close();
             
         }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada"+ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cuartel"+ex.getMessage());
         }
     
         return cuarteles;

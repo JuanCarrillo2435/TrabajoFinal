@@ -8,6 +8,7 @@ import Data.*;
 import Entidades.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -51,7 +52,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         jtNombre = new javax.swing.JTextField();
         jtCoordY = new javax.swing.JTextField();
         jtTelefono = new javax.swing.JTextField();
-        jtCorreos = new javax.swing.JTextField();
+        jtCorreo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCuartel = new javax.swing.JTable();
         jbCuartel = new javax.swing.JButton();
@@ -76,7 +77,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Telefono:");
 
-        jLabel7.setText("Correos:");
+        jLabel7.setText("Correo:");
 
         jTableCuartel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -94,10 +95,25 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         jbCuartel.setText("Editar");
 
         jbNuevo.setText("Nuevo Cuartel");
+        jbNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbNuevoActionPerformed(evt);
+            }
+        });
 
         jbLimpiar.setText("Limpiar");
+        jbLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimpiarActionPerformed(evt);
+            }
+        });
 
         jbSeleccion.setText("Seleccionar");
+        jbSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSeleccionActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -119,13 +135,13 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(jbCuartel)
-                        .addGap(76, 76, 76)
+                        .addGap(90, 90, 90)
                         .addComponent(jbNuevo)
-                        .addGap(77, 77, 77)
+                        .addGap(97, 97, 97)
                         .addComponent(jbLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbSeleccion)
-                        .addGap(78, 78, 78)
+                        .addGap(97, 97, 97)
                         .addComponent(jbSalir))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -143,7 +159,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                             .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtCorreos, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 25, Short.MAX_VALUE))
@@ -178,7 +194,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jtCorreos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -196,6 +212,53 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
+
+    private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
+        Cuartel cuartel = new Cuartel();
+        
+        try{
+            cuartel.setNombre_cuartel(jtNombre.getText());
+            cuartel.setDireccion(jtDireccion.getText());
+            cuartel.setCoord_X(Integer.parseInt(jtCoordX.getText()));
+            cuartel.setCoord_Y(Integer.parseInt(jtCoordY.getText()));
+            cuartel.setTelefono(jtTelefono.getText());
+            cuartel.setCorreo(jtCorreo.getText());
+            
+            if (camposVacios()){
+                JOptionPane.showMessageDialog(this,"Debes completar todos los campos");
+            }else{
+                cd.crearCuartel(cuartel);
+                cargarCuarteles();
+                vaciarCampos();
+                          
+            }
+        }catch(NumberFormatException n){
+            JOptionPane.showMessageDialog(this,"Error en el ingreso de datos");
+            
+        }
+        
+    
+    }//GEN-LAST:event_jbNuevoActionPerformed
+
+    private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
+        vaciarCampos();
+    }//GEN-LAST:event_jbLimpiarActionPerformed
+
+    private void jbSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSeleccionActionPerformed
+        Cuartel cuartel = new Cuartel();
+        if (jTableCuartel.getSelectedRow()>-1){
+            int codigo = Integer.parseInt(String.valueOf(jTableCuartel.getValueAt(jTableCuartel.getSelectedRow(), 0)));
+            cuartel = cd.buscarCuartel(codigo);
+            jtNombre.setText(cuartel.getNombre_cuartel());
+            jtDireccion.setText(cuartel.getDireccion());
+            jtCoordX.setText(String.valueOf( cuartel.getCoord_X()));
+            jtCoordY.setText(String.valueOf( cuartel.getCoord_Y()));
+            jtTelefono.setText(cuartel.getTelefono());
+            jtCorreo.setText(cuartel.getCorreo());
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe selecciona un cuartel Primero");
+        }
+    }//GEN-LAST:event_jbSeleccionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -215,7 +278,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbSeleccion;
     private javax.swing.JTextField jtCoordX;
     private javax.swing.JTextField jtCoordY;
-    private javax.swing.JTextField jtCorreos;
+    private javax.swing.JTextField jtCorreo;
     private javax.swing.JTextField jtDireccion;
     private javax.swing.JTextField jtNombre;
     private javax.swing.JTextField jtTelefono;
@@ -223,6 +286,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
 
 
     private void armarCabecera(){
+        modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
         modelo.addColumn("Dirección");
         modelo.addColumn("Teléfono");
@@ -230,11 +294,26 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
     }
 
     private void cargarCuarteles(){
+        modelo.setRowCount(0);
         List<Cuartel> cuarteles = new ArrayList();
         cuarteles = cd.listarCuarteles();
         for(Cuartel c : cuarteles){
-             modelo.addRow(new Object[]{c.getNombre_cuartel(),c.getDireccion(),c.getTelefono()});
+             modelo.addRow(new Object[]{c.getCodCuartel(),c.getNombre_cuartel(),c.getDireccion(),c.getTelefono()});
         }
+    }
+    
+    private boolean camposVacios(){
+        return (jtNombre.getText().isEmpty() || jtDireccion.getText().isEmpty() || jtCoordX.getText().isEmpty() || jtCoordY.getText().isEmpty() || jtTelefono.getText().isEmpty() || jtCorreo.getText().isEmpty());
+    }
+    
+    
+    private void vaciarCampos(){
+        jtNombre.setText("");
+        jtDireccion.setText("");
+        jtCoordX.setText("");
+        jtCoordY.setText("");
+        jtTelefono.setText("");
+        jtCorreo.setText("");
     }
 
 }
