@@ -14,6 +14,7 @@ public class FormBrigada extends javax.swing.JInternalFrame {
 
     public FormBrigada() {
         initComponents();
+        listarCuarteles();
     }
 
     @SuppressWarnings("unchecked")
@@ -27,6 +28,8 @@ public class FormBrigada extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jCuartel = new javax.swing.JComboBox<>();
         jBcrear = new javax.swing.JButton();
+
+        setClosable(true);
 
         jLabel1.setText("Nombre Brigada");
 
@@ -110,7 +113,7 @@ public class FormBrigada extends javax.swing.JInternalFrame {
         List<Cuartel> cuarteles = new ArrayList();
         cuarteles = cd.listarCuarteles();
         for(Cuartel c : cuarteles){
-             jCuartel.addItem(new Object[]{c.getCodCuartel(),c.getNombre_cuartel(),c.getDireccion(),c.getTelefono()});
+             jCuartel.addItem(new Object[]{"Codigo"+c.getCodCuartel(),c.getNombre_cuartel(),c.getDireccion(),c.getTelefono()});
         }
     }
 

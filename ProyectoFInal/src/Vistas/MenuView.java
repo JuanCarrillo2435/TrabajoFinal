@@ -48,6 +48,8 @@ public class MenuView extends javax.swing.JFrame {
         jmiListaBomberos = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jCFormBrigada = new javax.swing.JCheckBoxMenuItem();
+        jCListaBrigada = new javax.swing.JCheckBoxMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -93,6 +95,25 @@ public class MenuView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Brigadas");
+
+        jCFormBrigada.setSelected(true);
+        jCFormBrigada.setText("Formulario de Brigadas");
+        jCFormBrigada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCFormBrigadaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCFormBrigada);
+
+        jCListaBrigada.setSelected(true);
+        jCListaBrigada.setText("Listas de Brigadas");
+        jCListaBrigada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCListaBrigadaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jCListaBrigada);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Cuartel");
@@ -157,6 +178,22 @@ public class MenuView extends javax.swing.JFrame {
         escritorio.add(cuartel);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jCListaBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCListaBrigadaActionPerformed
+                escritorio.removeAll();
+        escritorio.repaint();
+        ListarBrigadas brigada = new ListarBrigadas();
+        brigada.setVisible(true);
+        escritorio.add(brigada);
+    }//GEN-LAST:event_jCListaBrigadaActionPerformed
+
+    private void jCFormBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCFormBrigadaActionPerformed
+        escritorio.removeAll();
+        escritorio.repaint();
+        FormBrigada brigada = new FormBrigada();
+        brigada.setVisible(true);
+        escritorio.add(brigada);
+    }//GEN-LAST:event_jCFormBrigadaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -195,6 +232,8 @@ public class MenuView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JCheckBoxMenuItem jCFormBrigada;
+    private javax.swing.JCheckBoxMenuItem jCListaBrigada;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
