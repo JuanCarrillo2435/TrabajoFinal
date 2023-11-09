@@ -113,7 +113,7 @@ public class FormBrigada extends javax.swing.JInternalFrame {
         List<Cuartel> cuarteles = new ArrayList();
         cuarteles = cd.listarCuarteles();
         for(Cuartel c : cuarteles){
-             jCuartel.addItem(new Object[]{"Codigo"+c.getCodCuartel(),c.getNombre_cuartel(),c.getDireccion(),c.getTelefono()});
+             jCuartel.addItem(c);
         }
     }
 
