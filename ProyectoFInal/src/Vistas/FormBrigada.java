@@ -64,9 +64,9 @@ public class FormBrigada extends javax.swing.JInternalFrame {
                             .addComponent(jTnombre)
                             .addComponent(jCuartel, 0, 223, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
+                        .addGap(173, 173, 173)
                         .addComponent(jBcrear)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -83,9 +83,9 @@ public class FormBrigada extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jCuartel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addGap(78, 78, 78)
                 .addComponent(jBcrear)
-                .addGap(77, 77, 77))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         pack();

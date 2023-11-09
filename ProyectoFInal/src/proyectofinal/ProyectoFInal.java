@@ -28,7 +28,7 @@ public class ProyectoFInal {
 //CREAR BRIGADAS
     Brigada bri = new Brigada();
         BrigadaData brigada = new BrigadaData();
-       Brigada alfa = new Brigada("Gama","Incendios en industrias y fábricas",true, c1);
+//       Brigada alfa = new Brigada("Gama","Incendios en industrias y fábricas",true, c1);
 //        
 //     brigada.crearBrigada(alfa);
 
