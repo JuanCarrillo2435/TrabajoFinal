@@ -22,7 +22,7 @@ public class BrigadaData {
     
     
     public void crearBrigada(Brigada brigada){
-        String sql = "INSERT INTO brigada(nombre_br, especialidad, libre, nro_cuartel) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO brigada(nombre_br, especialidad, libre, nro_cuartel, estado) VALUES (?,?,?,?,?)";
         
         try {
             PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -31,6 +31,7 @@ public class BrigadaData {
             ps.setString(2,brigada.getEspecialidad());
             ps.setBoolean(3, true);
             ps.setInt(4, brigada.getNro_cuartel().getCodCuartel());
+            ps.setBoolean(5, false);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             
@@ -53,7 +54,7 @@ public class BrigadaData {
     public List<Brigada> brigadasLibres(){
         List<Brigada> disponibles = new ArrayList();
         
-        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 1";
+        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 1 AND estado = 1 ";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
@@ -67,6 +68,7 @@ public class BrigadaData {
                 Cuartel cuartel = new Cuartel();
                 cuartel.setCodCuartel(rs.getInt("nro_cuartel"));
                 brigada.setNro_cuartel(cuartel);
+                brigada.setEstado(rs.getBoolean("estado"));
              //   brigada.setNro_cuartel(rs.getInt("nro_cuartel"));
                 disponibles.add(brigada);
             }
@@ -80,7 +82,7 @@ public class BrigadaData {
     /////////////
     public List<Brigada> brigadasNOLibres(){
         List<Brigada> noDisponibles = new ArrayList();
-        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 0";
+        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 0 AND estado = 1";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
@@ -94,6 +96,7 @@ public class BrigadaData {
                Cuartel cuartel = new Cuartel();
                 cuartel.setCodCuartel(rs.getInt("nro_cuartel"));
                 brigada.setNro_cuartel(cuartel);
+                brigada.setEstado(rs.getBoolean("estado"));
                 noDisponibles.add(brigada);
             }
             ps.close();

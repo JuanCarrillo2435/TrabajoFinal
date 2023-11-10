@@ -9,23 +9,34 @@ public class Brigada {
     private String especialidad;
     private boolean libre;
     private Cuartel nro_cuartel;
+    private boolean estado;
   
     public Brigada() {
     }
 
-    public Brigada(String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel) {
+    public Brigada(String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel,boolean estado) {
         this.nombre_br = nombre_br;
         this.especialidad = especialidad;
         this.libre = libre;
         this.nro_cuartel = nro_cuartel;
+        this.estado = estado;
     }
 
-    public Brigada(int codBrigada, String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel) {
+    public Brigada(int codBrigada, String nombre_br, String especialidad, boolean libre, Cuartel nro_cuartel,boolean estado) {
         this.codBrigada = codBrigada;
         this.nombre_br = nombre_br;
         this.especialidad = especialidad;
         this.libre = libre;
         this.nro_cuartel = nro_cuartel;
+        this.estado = estado;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public int getCodBrigada() {
