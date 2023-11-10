@@ -172,16 +172,17 @@ public class CuartelData {
     
     //Por parametros se pasan las coordenadas X, Y. y se compara con todos los cuarteles activos
     //a travez de la funcion distancia(X,Y), devuelve el cuartel con la distancia mas corta.
-    //FALTA MEJORAR PORQUE ESTA DEVOLVIENDO LA DISTANCIA MAS LARGA
+    
     public Cuartel cuartelCerca (int coord_X, int coord_Y){
         List<Cuartel> cuarteles = listarCuarteles();
         Cuartel cuartel = new Cuartel();
-        double d =0;
-        for (Cuartel c : cuarteles){
-            if (distancia(c.getCoord_X(), c.getCoord_Y(),coord_X,coord_Y)>d){
-                d=distancia(c.getCoord_X(), c.getCoord_Y(),coord_X,coord_Y);
-                cuartel = c;
+        cuartel= cuarteles.get(0);
+        
+        for (int i=1; i<cuarteles.size();i++){
+            if(distancia(cuarteles.get(i).getCoord_X(), cuarteles.get(i).getCoord_Y(),coord_X,coord_Y) < distancia(cuartel.getCoord_X(), cuartel.getCoord_Y(),coord_X,coord_Y)){
+                cuartel = cuarteles.get(i);
             }
+            
         }
         
         return cuartel;
