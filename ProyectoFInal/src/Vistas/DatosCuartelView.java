@@ -55,13 +55,13 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         jtCorreo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCuartel = new javax.swing.JTable();
-        jbCuartel = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
         jbLimpiar = new javax.swing.JButton();
-        jbSeleccion = new javax.swing.JButton();
         jbSalir = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jtCodigo = new javax.swing.JTextField();
+        jbEliminar = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Datos del Cuartel");
@@ -92,16 +92,21 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableCuartel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCuartelMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCuartel);
 
-        jbCuartel.setText("Editar");
-        jbCuartel.addActionListener(new java.awt.event.ActionListener() {
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCuartelActionPerformed(evt);
+                jbEditarActionPerformed(evt);
             }
         });
 
-        jbNuevo.setText("Nuevo Cuartel");
+        jbNuevo.setText("Guardar");
         jbNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbNuevoActionPerformed(evt);
@@ -112,13 +117,6 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         jbLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbLimpiarActionPerformed(evt);
-            }
-        });
-
-        jbSeleccion.setText("Seleccionar");
-        jbSeleccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSeleccionActionPerformed(evt);
             }
         });
 
@@ -133,6 +131,13 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
 
         jtCodigo.setEditable(false);
 
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -142,20 +147,17 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jbCuartel)
-                        .addGap(90, 90, 90)
+                        .addComponent(jbEditar)
+                        .addGap(43, 43, 43)
                         .addComponent(jbNuevo)
-                        .addGap(97, 97, 97)
-                        .addComponent(jbLimpiar)
+                        .addGap(46, 46, 46)
+                        .addComponent(jbEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbSeleccion)
-                        .addGap(97, 97, 97)
-                        .addComponent(jbSalir))
+                        .addComponent(jbLimpiar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
@@ -172,9 +174,11 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                             .addComponent(jtCoordY, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbSalir, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(0, 25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,11 +222,11 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCuartel)
+                    .addComponent(jbEditar)
                     .addComponent(jbNuevo)
                     .addComponent(jbLimpiar)
-                    .addComponent(jbSeleccion)
-                    .addComponent(jbSalir))
+                    .addComponent(jbSalir)
+                    .addComponent(jbEliminar))
                 .addGap(23, 23, 23))
         );
 
@@ -233,30 +237,32 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_jbSalirActionPerformed
 
+    
+    //Despues de guardar el cuartel actualiza el jTable y vacia los TextField
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
         Cuartel cuartel = new Cuartel();
-        
-        try{
-            cuartel.setNombre_cuartel(jtNombre.getText());
-            cuartel.setDireccion(jtDireccion.getText());
-            cuartel.setCoord_X(Integer.parseInt(jtCoordX.getText()));
-            cuartel.setCoord_Y(Integer.parseInt(jtCoordY.getText()));
-            cuartel.setTelefono(jtTelefono.getText());
-            cuartel.setCorreo(jtCorreo.getText());
-            
-            if (camposVacios()){
+        if (camposVacios()){
                 JOptionPane.showMessageDialog(this,"Debes completar todos los campos");
             }else{
+            try{
+                cuartel.setNombre_cuartel(jtNombre.getText());
+                cuartel.setDireccion(jtDireccion.getText());
+                cuartel.setCoord_X(Integer.parseInt(jtCoordX.getText()));
+                cuartel.setCoord_Y(Integer.parseInt(jtCoordY.getText()));
+                cuartel.setTelefono(jtTelefono.getText());
+                cuartel.setCorreo(jtCorreo.getText());
+                cuartel.setEstado(true);
+            
                 cd.crearCuartel(cuartel);
                 cargarCuarteles();
                 vaciarCampos();
                           
-            }
-        }catch(NumberFormatException n){
-            JOptionPane.showMessageDialog(this,"Error en el ingreso de datos");
+           
+            }catch(NumberFormatException n){
+                JOptionPane.showMessageDialog(this,"Error en el ingreso de datos");
             
+            }
         }
-        
     
     }//GEN-LAST:event_jbNuevoActionPerformed
 
@@ -264,24 +270,10 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         vaciarCampos();
     }//GEN-LAST:event_jbLimpiarActionPerformed
 
-    private void jbSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSeleccionActionPerformed
-        Cuartel cuartel = new Cuartel();
-        if (jTableCuartel.getSelectedRow()>-1){
-            int codigo = Integer.parseInt(String.valueOf(jTableCuartel.getValueAt(jTableCuartel.getSelectedRow(), 0)));
-            cuartel = cd.buscarCuartel(codigo);
-            jtCodigo.setText(String.valueOf(codigo));
-            jtNombre.setText(cuartel.getNombre_cuartel());
-            jtDireccion.setText(cuartel.getDireccion());
-            jtCoordX.setText(String.valueOf( cuartel.getCoord_X()));
-            jtCoordY.setText(String.valueOf( cuartel.getCoord_Y()));
-            jtTelefono.setText(cuartel.getTelefono());
-            jtCorreo.setText(cuartel.getCorreo());
-        }else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un cuartel Primero");
-        }
-    }//GEN-LAST:event_jbSeleccionActionPerformed
-
-    private void jbCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCuartelActionPerformed
+    
+    
+    //Despues de actualizar el cuartel actualiza el jTable y vacia los TextField
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
         if (!(jtCodigo.getText().isEmpty())){
             Cuartel c =new Cuartel();
             if (camposVacios()){
@@ -295,6 +287,7 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
                 c.setCoord_Y(Integer.parseInt(jtCoordY.getText()));
                 c.setTelefono(jtTelefono.getText());
                 c.setCorreo(jtCorreo.getText());
+                c.setEstado(true);
                 cd.actualizarCuartel(c);
                 cargarCuarteles();
                 vaciarCampos();
@@ -303,7 +296,36 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
         }else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar un cuartel primero para poder guardar la modificacion");
         }
-    }//GEN-LAST:event_jbCuartelActionPerformed
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    //Al eliminar cuarteles no hay control de excepciones porque el codigo lo saca de jtCodigo
+    //que es un textField que no es editable (siempre tiene un entero)
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        if (!(jtCodigo.getText().isEmpty())){
+            cd.eliminarCuartel(Integer.parseInt(jtCodigo.getText()));
+            cargarCuarteles();
+            vaciarCampos();
+        }else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un cuartel primero, antes de eliminar");
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    
+    //la seleccion del cuartel se realiza con un doble clic
+    private void jTableCuartelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCuartelMouseClicked
+        if(evt.getClickCount()==2){
+         Cuartel cuartel = new Cuartel();
+         int codigo = Integer.parseInt(String.valueOf(jTableCuartel.getValueAt(jTableCuartel.getSelectedRow(), 0)));
+            cuartel = cd.buscarCuartel(codigo);
+            jtCodigo.setText(String.valueOf(codigo));
+            jtNombre.setText(cuartel.getNombre_cuartel());
+            jtDireccion.setText(cuartel.getDireccion());
+            jtCoordX.setText(String.valueOf( cuartel.getCoord_X()));
+            jtCoordY.setText(String.valueOf( cuartel.getCoord_Y()));
+            jtTelefono.setText(cuartel.getTelefono());
+            jtCorreo.setText(cuartel.getCorreo());
+       }
+    }//GEN-LAST:event_jTableCuartelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -317,11 +339,11 @@ public class DatosCuartelView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCuartel;
-    private javax.swing.JButton jbCuartel;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbLimpiar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSalir;
-    private javax.swing.JButton jbSeleccion;
     private javax.swing.JTextField jtCodigo;
     private javax.swing.JTextField jtCoordX;
     private javax.swing.JTextField jtCoordY;

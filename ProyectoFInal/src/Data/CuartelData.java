@@ -20,7 +20,7 @@ public class CuartelData {
     
     public void crearCuartel(Cuartel cuartel){
     
-    String sql = "INSERT INTO cuartel(nombre_cuartel, direccion, coord_X, coord_Y, telefono, correo) VALUES (?,?,?,?,?,?)";
+    String sql = "INSERT INTO cuartel(nombre_cuartel, direccion, coord_X, coord_Y, telefono, correo, estado) VALUES (?,?,?,?,?,?,?)";
    
         try {
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -31,6 +31,7 @@ public class CuartelData {
             ps.setInt(4, cuartel.getCoord_Y());
             ps.setString(5, cuartel.getTelefono());
             ps.setString(6, cuartel.getCorreo());
+            ps.setBoolean(7, cuartel.isEstado());
             
             ps.executeUpdate();
             
@@ -47,9 +48,25 @@ public class CuartelData {
         }
 }
     
+    public void eliminarCuartel(int cod){
+        try {
+            String sql = "UPDATE cuartel SET estado = 0 WHERE codCuartel = ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, cod);
+            int fila=ps.executeUpdate();
+            if(fila==1){
+                JOptionPane.showMessageDialog(null, " Se eliminó el cuartel correctamente");
+            }
+            ps.close();
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla cuartel");
+        }
+        
+        
+    }
     
     public void actualizarCuartel(Cuartel cuartel){
-        String sql = "UPDATE cuartel SET nombre_cuartel = ?, direccion = ?, coord_X = ?, coord_Y = ?, telefono = ?, correo = ? WHERE codCuartel = ?";
+        String sql = "UPDATE cuartel SET nombre_cuartel = ?, direccion = ?, coord_X = ?, coord_Y = ?, telefono = ?, correo = ?, estado = ? WHERE codCuartel = ?";
         
         PreparedStatement ps = null;
         try {
@@ -60,7 +77,8 @@ public class CuartelData {
             ps.setInt(4, cuartel.getCoord_Y());
             ps.setString(5, cuartel.getTelefono());
             ps.setString(6, cuartel.getCorreo());
-            ps.setInt(7, cuartel.getCodCuartel());
+            ps.setBoolean(7, cuartel.isEstado());
+            ps.setInt(8, cuartel.getCodCuartel());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
@@ -92,6 +110,7 @@ public class CuartelData {
             cuartel.setCoord_Y(rs.getInt("coord_Y"));
             cuartel.setTelefono(rs.getString("telefono"));
             cuartel.setCorreo(rs.getString("correo"));
+            cuartel.setEstado(rs.getBoolean("estado"));
                 
         }else {
                 JOptionPane.showMessageDialog(null, "No existe el cuartel");
@@ -106,10 +125,12 @@ public class CuartelData {
     
     }
     
+    
+    //Se modifico la consulta en base a los cuarteles ACTIVOS
     public List<Cuartel> listarCuarteles(){
         List<Cuartel> cuarteles = new ArrayList();
         
-        String sql ="SELECT * FROM cuartel;";
+        String sql ="SELECT * FROM cuartel WHERE estado = 1;";
         
          
         try{
@@ -128,6 +149,7 @@ public class CuartelData {
                 cuartel.setCoord_Y(rs.getInt("coord_Y"));
                 cuartel.setTelefono(rs.getString("telefono"));
                 cuartel.setCorreo(rs.getString("correo"));
+                cuartel.setEstado(rs.getBoolean("estado"));
                 cuarteles.add(cuartel);
                                    
             }
@@ -139,11 +161,18 @@ public class CuartelData {
     
         return cuarteles;
     }
+    
+    
+    //la distancia se toma en base al calculo de la diagonal (PITAGORAS)
     public double distancia (int c1X, int c1Y, int c2X, int c2Y){
         return Math.sqrt(Math.pow((c2X - c1X),2) + Math.pow((c2Y - c1Y),2));
     }
     
     
+    
+    //Por parametros se pasan las coordenadas X, Y. y se compara con todos los cuarteles activos
+    //a travez de la funcion distancia(X,Y), devuelve el cuartel con la distancia mas corta.
+    //FALTA MEJORAR PORQUE ESTA DEVOLVIENDO LA DISTANCIA MAS LARGA
     public Cuartel cuartelCerca (int coord_X, int coord_Y){
         List<Cuartel> cuarteles = listarCuarteles();
         Cuartel cuartel = new Cuartel();

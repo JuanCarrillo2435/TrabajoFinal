@@ -9,20 +9,22 @@ public class Cuartel {
     private int coord_Y;
     private String telefono;
     private String correo;
+    private boolean estado;
 
     public Cuartel() {
     }
 
-    public Cuartel(String nombre_cuartel, String direccion, int coord_X, int coord_Y, String telefono, String correo) {
+    public Cuartel(String nombre_cuartel, String direccion, int coord_X, int coord_Y, String telefono, String correo, boolean estado) {
         this.nombre_cuartel = nombre_cuartel;
         this.direccion = direccion;
         this.coord_X = coord_X;
         this.coord_Y = coord_Y;
         this.telefono = telefono;
         this.correo = correo;
+        this.estado = estado;
     }
 
-    public Cuartel(int codCuartel, String nombre_cuartel, String direccion, int coord_X, int coord_Y, String telefono, String correo) {
+    public Cuartel(int codCuartel, String nombre_cuartel, String direccion, int coord_X, int coord_Y, String telefono, String correo, boolean estado) {
         this.codCuartel = codCuartel;
         this.nombre_cuartel = nombre_cuartel;
         this.direccion = direccion;
@@ -30,6 +32,7 @@ public class Cuartel {
         this.coord_Y = coord_Y;
         this.telefono = telefono;
         this.correo = correo;
+        this.estado = estado;
     }
 
     public int getCodCuartel() {
@@ -87,6 +90,16 @@ public class Cuartel {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    
 
     @Override
     public String toString() {
