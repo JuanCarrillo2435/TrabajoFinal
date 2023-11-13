@@ -54,7 +54,7 @@ public class BrigadaData {
     public List<Brigada> brigadasLibres(){
         List<Brigada> disponibles = new ArrayList();
         
-        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = ? AND estado = 1 ";
+        String sql ="SELECT * FROM `brigada` WHERE libre = 1 AND estado = 1 ";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
@@ -68,7 +68,7 @@ public class BrigadaData {
                 Cuartel cuartel = new Cuartel();
                 cuartel.setCodCuartel(rs.getInt("nro_cuartel"));
                 brigada.setNro_cuartel(cuartel);
-                brigada.setEstado(rs.getBoolean("estado"));
+                
              //   brigada.setNro_cuartel(rs.getInt("nro_cuartel"));
                 disponibles.add(brigada);
             }
