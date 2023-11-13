@@ -570,7 +570,7 @@ if (filaseleccionada >= 0) {
           BomberosData bombero = new BomberosData();  
     List<Bomberos> bomberos = bombero.listarBomberos();
     BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
+        List<Brigada> buscar2 = brigada.listarBrigadas();
         
         for (Bomberos bom : bomberos) {
             Brigada brigas = bom.getCodBrigada();
@@ -599,7 +599,7 @@ if (filaseleccionada >= 0) {
          private void armarCBbrigadas(){
         // LISTAR BRIGADAS LIBRES
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
+        List<Brigada> buscar2 = brigada.listarBrigadas();
     
     if (buscar2 != null) {
         for (int i = 0; i < buscar2.size(); i++) {
