@@ -72,6 +72,11 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
 
         jRLibres.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jRLibres.setText("Libres");
+        jRLibres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRLibresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,14 +111,16 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCuartelActionPerformed
-        if (jRLibres.isSelected()) {
+
             borrarFila();
             cargarBrigadasLibres();
-        }else{
-            borrarFila();
-            cargarBrigadasnoLibres();
-        }
+        
     }//GEN-LAST:event_jCuartelActionPerformed
+
+    private void jRLibresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRLibresActionPerformed
+        borrarFila();
+        cargarBrigadasLibres();
+    }//GEN-LAST:event_jRLibresActionPerformed
 
     private void listarCuarteles() {
         List<Cuartel> cuarteles = new ArrayList();
@@ -134,11 +141,19 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
     private void cargarBrigadasLibres() {
         Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
         modelo.setRowCount(0);
-        List<Brigada> listaBrigadasLibres = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
+        List<Brigada> listarBrigadas = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
 
-        for (Brigada brigada : listaBrigadasLibres) {
-            if (brigada.isLibre() == true) {
-                modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
+        for (Brigada brigada : listarBrigadas) {
+            if (jRLibres.isSelected()==true) {
+                if (brigada.isLibre()==true) {
+                     modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
+                }
+               
+            }else if(jRLibres.isSelected() == false){
+                if (brigada.isLibre()== false) {
+                     modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
+                }
+               
             }
 
         }

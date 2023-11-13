@@ -156,7 +156,7 @@ public class BrigadaData {
     
     public List<Brigada> listarBrigadasporCuartel(Cuartel cuartel) {
     List<Brigada> brixcuartel = new ArrayList();
-    String sql = "SELECT * FROM brigada WHERE nro_cuartel = ? AND estado = 1";
+    String sql = "SELECT * FROM brigada WHERE nro_cuartel = ?";
     
     try {
         PreparedStatement ps = con.prepareStatement(sql);
