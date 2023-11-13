@@ -4,24 +4,31 @@
  */
 package Vistas;
 
+import Data.BrigadaData;
 import Data.CuartelData;
+import Entidades.Brigada;
 import Entidades.Cuartel;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarBrigadas extends javax.swing.JInternalFrame {
+
     CuartelData cd = new CuartelData();
-        private DefaultTableModel modelo = new DefaultTableModel(){
-        public boolean isCellEditable (int f, int c){
+    BrigadaData bd = new BrigadaData();
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
             return false;
         }
     };
-  
+
     public ListarBrigadas() {
         initComponents();
         listarCuarteles();
         armarCabecera();
+        cargarBrigadasLibres();
+        cargarBrigadasnoLibres();
+        borrarFila();
     }
 
     /**
@@ -37,7 +44,7 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jCuartel = new javax.swing.JComboBox<>();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRLibres = new javax.swing.JRadioButton();
 
         setClosable(true);
 
@@ -57,8 +64,14 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Brigadas por cuartel");
 
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jRadioButton1.setText("Libres");
+        jCuartel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCuartelActionPerformed(evt);
+            }
+        });
+
+        jRLibres.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jRLibres.setText("Libres");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,7 +86,7 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
                         .addGap(42, 42, 42)
                         .addComponent(jCuartel, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(59, 59, 59)
-                        .addComponent(jRadioButton1)))
+                        .addComponent(jRLibres)))
                 .addGap(0, 14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,7 +96,7 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCuartel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton1))
+                    .addComponent(jRLibres))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -92,29 +105,72 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCuartelActionPerformed
+        if (jRLibres.isSelected()) {
+            borrarFila();
+            cargarBrigadasLibres();
+        }else{
+            borrarFila();
+            cargarBrigadasnoLibres();
+        }
+    }//GEN-LAST:event_jCuartelActionPerformed
 
-    
-    private void listarCuarteles(){
+    private void listarCuarteles() {
         List<Cuartel> cuarteles = new ArrayList();
         cuarteles = cd.listarCuarteles();
-        for(Cuartel c : cuarteles){
-             jCuartel.addItem(c);
+        for (Cuartel c : cuarteles) {
+            jCuartel.addItem(c);
         }
     }
-    
-        private void armarCabecera(){
+
+    private void armarCabecera() {
         modelo.addColumn("Codigo");
         modelo.addColumn("Nombre");
-        modelo.addColumn("Cuartel");
+        modelo.addColumn("Especialidad");
+
         jTable1.setModel(modelo);
     }
+
+    private void cargarBrigadasLibres() {
+        Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
+        modelo.setRowCount(0);
+        List<Brigada> listaBrigadasLibres = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
+
+        for (Brigada brigada : listaBrigadasLibres) {
+            if (brigada.isLibre() == true) {
+                modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
+            }
+
+        }
+
+    }
+    
+        private void cargarBrigadasnoLibres() {
+        Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
+        modelo.setRowCount(0);
+        List<Brigada> listaBrigadasLibres = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
+
+        for (Brigada brigada : listaBrigadasLibres) {
+            if (brigada.isLibre() == false) {
+                modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
+            }
+
+        }
+
+    }
+
+    private void borrarFila() {
+        int ind = modelo.getRowCount() - 1;
+        for (int i = ind; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<Object> jCuartel;
+    private javax.swing.JComboBox<Cuartel> jCuartel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRLibres;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
-
-

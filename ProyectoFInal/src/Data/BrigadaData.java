@@ -54,7 +54,7 @@ public class BrigadaData {
     public List<Brigada> brigadasLibres(){
         List<Brigada> disponibles = new ArrayList();
         
-        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = 1 AND estado = 1 ";
+        String sql ="SELECT codBrigada, nombre_br, especialidad, libre, nro_cuartel FROM `brigada` WHERE libre = ? AND estado = 1 ";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
@@ -124,6 +124,38 @@ public class BrigadaData {
         }
         
     }
+    
+    public List<Brigada> listarBrigadasporCuartel(Cuartel cuartel) {
+    List<Brigada> brixcuartel = new ArrayList();
+    String sql = "SELECT * FROM brigada WHERE nro_cuartel = ? AND estado = 1";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, cuartel.getCodCuartel()); // Configura el valor del parámetro
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Brigada brigada = new Brigada();
+            brigada.setCodBrigada(rs.getInt("codBrigada"));
+            brigada.setNombre_br(rs.getString("nombre_br"));
+            brigada.setEspecialidad(rs.getString("especialidad"));
+            brigada.setLibre(rs.getBoolean("libre"));
+
+            cuartel.setCodCuartel(rs.getInt("nro_cuartel"));
+            brigada.setNro_cuartel(cuartel);
+            
+            brigada.setEstado(rs.getBoolean("estado"));
+
+            brixcuartel.add(brigada);
+        }
+
+    } catch (SQLException ex) {
+        System.out.println("Error al acceder a la tabla Brigada" + ex.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + ex.getMessage());
+    }
+
+    return brixcuartel;
+}
          
    
     
