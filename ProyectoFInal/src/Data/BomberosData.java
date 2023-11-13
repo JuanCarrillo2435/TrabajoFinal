@@ -21,7 +21,7 @@ public class BomberosData {
         con= Conexion.getConexion();
     }
     public void CrearBombero(Bomberos bombero){
-        String sql ="INSERT INTO bombero(dni, nombre_ape, fecha_nac, celular, codBrigada), estado VALUES (?,?,?,?,?,?)";
+        String sql ="INSERT INTO bombero(dni, nombre_ape, fecha_nac, celular, codBrigada, estado)  VALUES (?,?,?,?,?,?)";
         
             try {
                 PreparedStatement ps = con.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS);
@@ -49,22 +49,25 @@ public class BomberosData {
     }
     
     public void bajarBombero(Bomberos bombero){
-        String sql = "UPDATE bombero SET estado= false WHERE id_bombero = ?";
-            try {
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setBoolean(1, bombero.isEstado() );
-                ps.setInt(2, bombero.getId_bombero());
-                int f = ps.executeUpdate();
-                if (f == 1) {
-                    JOptionPane.showMessageDialog(null, "El estado fue cambiado");
-                    
-                }else{
-                    JOptionPane.showMessageDialog(null, "No se encontró el bombero");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(BomberosData.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        String sql = "UPDATE bombero SET estado = false WHERE id_bombero = ?";
+    
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, bombero.getId_bombero());
+        
+        int f = ps.executeUpdate();
+        
+        if (f == 1) {
+            JOptionPane.showMessageDialog(null, "El estado fue cambiado");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el bombero");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(BomberosData.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
+
     
     
     public void actualizarBombero(Bomberos bombero){
@@ -91,7 +94,7 @@ public class BomberosData {
     
     public List<Bomberos> listarBomberos(){
         List<Bomberos> listar = new ArrayList(); 
-        String sql ="SELECT id_bombero, dni, nombre_ape, fecha_nac, celular, codBrigada FROM bombero WHERE estado = 1";
+        String sql ="SELECT id_bombero, dni, nombre_ape, fecha_nac, celular, codBrigada, estado FROM bombero";
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
@@ -102,11 +105,11 @@ public class BomberosData {
                     bombero.setNombre_ape(rs.getString("nombre_ape"));
                     bombero.setFecha_nac(rs.getDate("fecha_nac").toLocalDate());
                     bombero.setCelular(rs.getString("celular"));
-                    
                     Brigada bri = new Brigada();
                     bri.setCodBrigada(rs.getInt("codBrigada"));
                     bombero.setCodBrigada(bri);
                   //  bombero.setCodBrigada(rs.getInt("codBrigada"));
+                  bombero.setEstado(rs.getBoolean("estado"));
                     listar.add(bombero);
                 }
             } catch (SQLException ex) {

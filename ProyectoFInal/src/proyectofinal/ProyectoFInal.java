@@ -24,6 +24,17 @@ public class ProyectoFInal {
         
         
 
+
+
+
+
+
+
+
+
+
+
+
 //---------------------------------------------
 //CREAR BRIGADAS
     Brigada bri = new Brigada();

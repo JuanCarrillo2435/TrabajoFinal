@@ -4,18 +4,28 @@
  */
 package Vistas;
 
+import Data.BomberosData;
+import Data.BrigadaData;
+import Entidades.Bomberos;
+import Entidades.Brigada;
+import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Fran
  */
 public class ListaBomberosView extends javax.swing.JInternalFrame {
-
+private DefaultTableModel modelo = new DefaultTableModel();
     /**
      * Creates new form ListaBomberosView
      */
     public ListaBomberosView() {
         initComponents();
         this.setSize(800, 600);
+        armarCabecera();
+        armarCBbrigadas();
     }
 
     /**
@@ -33,13 +43,14 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
         jTable2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        boton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jCBfiltrobrigada = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRBactivos = new javax.swing.JRadioButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTtablabomberos = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,6 +80,13 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
 
         jButton1.setText("jButton1");
 
+        boton.setText("jButton2");
+        boton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActionPerformed(evt);
+            }
+        });
+
         setClosable(true);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -76,24 +94,24 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("LISTAR BOMBEROS");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCBfiltrobrigada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jCBfiltrobrigadaActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Filtrar por:");
 
-        jRadioButton1.setText("Activo");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jRBactivos.setSelected(true);
+        jRBactivos.setText("Activo");
+        jRBactivos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jRBactivosActionPerformed(evt);
             }
         });
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        jTtablabomberos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -104,27 +122,27 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(jTtablabomberos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 254, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(179, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBfiltrobrigada, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
-                        .addComponent(jRadioButton1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jRBactivos)))
+                .addContainerGap(180, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(126, 126, 126))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,12 +151,12 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(87, 87, 87)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBfiltrobrigada, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jRadioButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                    .addComponent(jRBactivos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,28 +173,100 @@ public class ListaBomberosView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void jCBfiltrobrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBfiltrobrigadaActionPerformed
+        
+        modelo.setRowCount(0);
+        bucle();
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    
+
+
+
+
+    }//GEN-LAST:event_jCBfiltrobrigadaActionPerformed
+    
+    private void jRBactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBactivosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+         modelo.setRowCount(0);
+        bucle();
+    }//GEN-LAST:event_jRBactivosActionPerformed
+
+    private void botonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActionPerformed
+
+    }//GEN-LAST:event_botonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton boton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jCBfiltrobrigada;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRBactivos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JTable jTtablabomberos;
     // End of variables declaration//GEN-END:variables
+
+    private void armarCBbrigadas(){
+        // LISTAR BRIGADAS LIBRES
+        BrigadaData brigada = new BrigadaData();
+        List<Brigada> buscar2 = brigada.brigadasLibres();
+    
+    if (buscar2 != null) {
+        for (int i = 0; i < buscar2.size(); i++) {
+            Brigada brii = buscar2.get(i);
+            jCBfiltrobrigada.addItem(brii.getNombre_br());
+        }
+    }
+    }
+    private void armarCabecera(){
+    modelo.addColumn("D.N.I");
+    modelo.addColumn("Nombre y Apellido");
+    modelo.addColumn("fecha de nacimiento");
+    modelo.addColumn("celular");
+    modelo.addColumn("Cod Brigada");
+    
+    jTtablabomberos.setModel(modelo);
+}
+    
+    private void bucle(){
+            BomberosData bombero = new BomberosData();  
+    List<Bomberos> bomberos = bombero.listarBomberos();
+    BrigadaData brigada = new BrigadaData();
+    List<Brigada> buscar2 = brigada.brigadasLibres();
+    String comboitem = (String) jCBfiltrobrigada.getSelectedItem();
+    
+    
+    if (buscar2 != null) {
+        for (int i = 0; i < buscar2.size(); i++) {
+            Brigada brii = buscar2.get(i);
+            if (comboitem.equals(brii.getNombre_br())) {
+                
+                for (Bomberos bom : bomberos) {
+                    Brigada brigadacod = bom.getCodBrigada();
+                    int bomcod = brigadacod.getCodBrigada();
+                    if (brii.getCodBrigada() == bomcod) {
+                        if (jRBactivos.isSelected()==true) {
+                            if (bom.isEstado() == true) {
+                                cargarBombero(bom,brii);
+                            }
+                        }else if(bom.isEstado()==false){
+                         cargarBombero(bom,brii);
+                     }
+                        
+                    }
+                }
+                }
+            }
+        }
+    }
+    private void cargarBombero (Bomberos bombero, Brigada brigada){
+        modelo.addRow(new Object[]{bombero.getDni(),bombero.getNombre_ape(),bombero.getFecha_nac(),bombero.getCelular(),brigada.getCodBrigada()});
+    }
 }
