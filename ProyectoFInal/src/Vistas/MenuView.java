@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vistas;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,7 +21,7 @@ public class MenuView extends javax.swing.JFrame {
     public MenuView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setSize(1280,762);
+        this.setSize(1280, 762);
         this.setResizable(false);
     }
 
@@ -53,6 +54,9 @@ public class MenuView extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenuSiniestro = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         jMenu6.setText("jMenu6");
@@ -67,11 +71,11 @@ public class MenuView extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 717, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGap(0, 616, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Bomberos");
@@ -117,6 +121,11 @@ public class MenuView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Cuartel");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
 
         jMenuItem2.setText("Datos de cuartel");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +138,36 @@ public class MenuView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Siniestro");
+        jMenu4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu4ActionPerformed(evt);
+            }
+        });
+
+        jMenuSiniestro.setText("Siniestros");
+        jMenuSiniestro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSiniestroActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuSiniestro);
+
+        jMenuItem3.setText("Historial");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem3);
+
+        jMenuItem4.setText("Resolucion de Siniestro");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem4);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Distancias");
@@ -157,8 +196,8 @@ public class MenuView extends javax.swing.JFrame {
         ListaBomberosView bombero = new ListaBomberosView();
         bombero.setVisible(true);
         escritorio.add(bombero);
-        
-        
+
+
     }//GEN-LAST:event_jmiListaBomberosActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -179,7 +218,7 @@ public class MenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jCListaBrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCListaBrigadaActionPerformed
-                escritorio.removeAll();
+        escritorio.removeAll();
         escritorio.repaint();
         ListarBrigadas brigada = new ListarBrigadas();
         brigada.setVisible(true);
@@ -193,6 +232,42 @@ public class MenuView extends javax.swing.JFrame {
         brigada.setVisible(true);
         escritorio.add(brigada);
     }//GEN-LAST:event_jCFormBrigadaActionPerformed
+
+    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jMenu4ActionPerformed
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenuSiniestroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSiniestroActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        SiniestroView sin = new SiniestroView();
+        sin.setVisible(true);
+        escritorio.add(sin);
+    }//GEN-LAST:event_jMenuSiniestroActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        HistorialSiniestrosView sin = new HistorialSiniestrosView();
+        sin.setVisible(true);
+        escritorio.add(sin);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        ResolucionSiniestrosView sin = new ResolucionSiniestrosView();
+        sin.setVisible(true);
+        escritorio.add(sin);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,6 +320,9 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuSiniestro;
     private javax.swing.JMenuItem jmiListaBomberos;
     // End of variables declaration//GEN-END:variables
 }
