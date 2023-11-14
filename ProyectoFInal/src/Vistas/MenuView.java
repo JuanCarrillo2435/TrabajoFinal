@@ -132,11 +132,6 @@ public class MenuView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Distancias");
-        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu5MouseClicked(evt);
-            }
-        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -198,14 +193,6 @@ public class MenuView extends javax.swing.JFrame {
         brigada.setVisible(true);
         escritorio.add(brigada);
     }//GEN-LAST:event_jCFormBrigadaActionPerformed
-
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
-        escritorio.removeAll();
-        escritorio.repaint();
-        ResolSiniestroView rsv = new ResolSiniestroView();
-        rsv.setVisible(true);
-        escritorio.add(rsv);
-    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments

@@ -6,8 +6,12 @@ package Vistas;
 
 import Data.*;
 import Entidades.*;
+import java.sql.*;
+import java.time.ZoneId;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class ResolSiniestroView extends javax.swing.JInternalFrame {
     
     SiniestroData sd = new SiniestroData();
+    BrigadaData bd = new BrigadaData();
     
      private DefaultTableModel modelo = new DefaultTableModel(){
         public boolean isCellEditable (int f, int c){
@@ -28,6 +33,7 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         initComponents();
         armarCabecera();
         cargarSiniestros();
+        jcBoxPuntos.setSelectedIndex(-1);
     }
 
     /**
@@ -79,40 +85,50 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         jcBoxPuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jbGuardar.setText("Guardar");
+        jbGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbGuardarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
+        jbSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(245, 245, 245))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(326, 326, 326)
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(353, 353, 353)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(425, 425, 425)
+                                .addComponent(jLabel2)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jcBoxPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(jbGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                        .addComponent(jbSalir)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                                .addComponent(jcResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(59, 59, 59)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jcBoxPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(103, 103, 103)
+                                .addComponent(jbGuardar)
+                                .addGap(63, 63, 63)
+                                .addComponent(jbSalir))
+                            .addComponent(jScrollPane1))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -123,21 +139,45 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jcResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
                         .addComponent(jcBoxPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
                         .addComponent(jbGuardar)
-                        .addComponent(jbSalir)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(jbSalir))
+                    .addComponent(jcResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        
+        if (camposVacios()){
+            JOptionPane.showMessageDialog(this,"Debes seleccionar un siniestro, luego una fecha de resolucion y una puntuacion del siniestro");
+        }else{
+            Siniestro siniestro = new Siniestro();
+            siniestro.setCodigo(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 0))));
+            siniestro.setFecha_siniestro(LocalDate.parse(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 1))));
+            siniestro.setTipo(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 2)));
+            siniestro.setCodBrigada(bd.buscarBrigada(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 3)))));
+            siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 5)));
+            siniestro.setPuntuacion(Integer.parseInt(jcBoxPuntos.getSelectedItem().toString()));
+            siniestro.setFecha_resol(jcResolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            sd.actualizarSiniestros(siniestro);
+            cargarSiniestros();
+        }
+        
+        
+    }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -157,9 +197,11 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         modelo.addColumn("ID");
         modelo.addColumn("Fecha");
         modelo.addColumn("Tipo");
+        modelo.addColumn("ID Brigada");
         modelo.addColumn("Brigada");
         modelo.addColumn("Detalles");
         jTableSiniestro.setModel(modelo);
+        
     }
 
     private void cargarSiniestros(){
@@ -167,7 +209,11 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         List<Siniestro> siniestros = new ArrayList();
         siniestros = sd.listarSiniestrosNOResueltos();
         for(Siniestro s : siniestros){
-             modelo.addRow(new Object[]{s.getCodigo(),s.getFecha_siniestro().toString(),s.getTipo(),s.getCodBrigada().getNombre_br(), s.getDetalle()});
+             modelo.addRow(new Object[]{s.getCodigo(),s.getFecha_siniestro().toString(), s.getTipo(),  s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
         }
+    }
+    
+    private boolean camposVacios(){
+        return (jcBoxPuntos.getSelectedIndex() == -1 || (jcResolucion.getDate()==null) || jTableSiniestro.getSelectedRow() == -1);
     }
 }

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 public class BrigadaData {
 
+    CuartelData cd = new CuartelData();
     private Connection con = null;
 
 
@@ -186,7 +187,30 @@ public class BrigadaData {
     return brixcuartel;
 }
          
-   
+   public Brigada buscarBrigada(int cod){
+       Brigada b = new Brigada();
+       String sql = "SELECT * FROM brigada WHERE codBrigada = ?";
+       try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, cod); // Configura el valor del parámetro
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()){
+            b.setCodBrigada(cod);
+            b.setNombre_br(rs.getString("nombre_br"));
+            b.setEspecialidad(rs.getString("especialidad"));
+            b.setLibre(rs.getBoolean("libre"));
+            b.setEstado(rs.getBoolean("estado"));
+            b.setNro_cuartel(cd.buscarCuartel(rs.getInt("nro_cuartel")));
+        }else {
+                JOptionPane.showMessageDialog(null, "No existe el cuartel");
+               }
+        ps.close();
+       } catch (SQLException ex) {
+        System.out.println("Error al acceder a la tabla Brigada" + ex.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Brigada" + ex.getMessage());
+    }
+       return b;
+   }
     
     
     
