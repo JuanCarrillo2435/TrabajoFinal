@@ -6,9 +6,9 @@ package Vistas;
 
 import Data.*;
 import Entidades.*;
-import java.sql.*;
 import java.time.ZoneId;
 import java.time.*;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -19,16 +19,16 @@ import javax.swing.table.DefaultTableModel;
  * @author Pablo
  */
 public class ResolSiniestroView extends javax.swing.JInternalFrame {
-    
+
     SiniestroData sd = new SiniestroData();
     BrigadaData bd = new BrigadaData();
-    
-     private DefaultTableModel modelo = new DefaultTableModel(){
-        public boolean isCellEditable (int f, int c){
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
             return false;
         }
     };
-    
+
     public ResolSiniestroView() {
         initComponents();
         armarCabecera();
@@ -156,23 +156,42 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        
-        if (camposVacios()){
-            JOptionPane.showMessageDialog(this,"Debes seleccionar un siniestro, luego una fecha de resolucion y una puntuacion del siniestro");
-        }else{
+
+                                         
+    if (camposVacios()) {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar un siniestro, luego una fecha de resolucion y una puntuacion del siniestro");
+    } else {
+        try {
             Siniestro siniestro = new Siniestro();
             siniestro.setCodigo(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 0))));
-            siniestro.setFecha_siniestro(LocalDate.parse(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 1))));
+
+            String fechaSiniestroString = String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 1));
+            LocalDateTime fechaSiniestroDateTime = LocalDateTime.parse(fechaSiniestroString);
+            LocalDate fechaSiniestro = fechaSiniestroDateTime.toLocalDate();
+            siniestro.setFecha_siniestro(fechaSiniestro.atStartOfDay());
+
             siniestro.setTipo(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 2)));
             siniestro.setCodBrigada(bd.buscarBrigada(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 3)))));
-            siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 5)));
+            siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(),5)));
             siniestro.setPuntuacion(Integer.parseInt(jcBoxPuntos.getSelectedItem().toString()));
-            siniestro.setFecha_resol(jcResolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            sd.actualizarSiniestros(siniestro);
+
+            LocalDateTime fechaResolucionDateTime = LocalDateTime.of(
+                    jcResolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                    LocalTime.MIDNIGHT
+            );
+            siniestro.setFecha_resol(fechaResolucionDateTime);
+
+            sd.completarSiniestro(siniestro);
             cargarSiniestros();
+        } catch (DateTimeParseException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error en el formato de fecha u hora. Asegúrate de seleccionar valores válidos.", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace(); // Opcional: Imprimir la traza de la excepción para depuración
         }
-        
-        
+    }
+
+
+
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalirActionPerformed
@@ -193,7 +212,7 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser jcResolucion;
     // End of variables declaration//GEN-END:variables
 
-    private void armarCabecera(){
+    private void armarCabecera() {
         modelo.addColumn("ID");
         modelo.addColumn("Fecha");
         modelo.addColumn("Tipo");
@@ -201,19 +220,19 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         modelo.addColumn("Brigada");
         modelo.addColumn("Detalles");
         jTableSiniestro.setModel(modelo);
-        
+
     }
 
-    private void cargarSiniestros(){
+    private void cargarSiniestros() {
         modelo.setRowCount(0);
         List<Siniestro> siniestros = new ArrayList();
         siniestros = sd.listarSiniestrosNOResueltos();
-        for(Siniestro s : siniestros){
-             modelo.addRow(new Object[]{s.getCodigo(),s.getFecha_siniestro().toString(), s.getTipo(),  s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
+        for (Siniestro s : siniestros) {
+            modelo.addRow(new Object[]{s.getCodigo(), s.getFecha_siniestro().toString(), s.getTipo(), s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
         }
     }
-    
-    private boolean camposVacios(){
-        return (jcBoxPuntos.getSelectedIndex() == -1 || (jcResolucion.getDate()==null) || jTableSiniestro.getSelectedRow() == -1);
+
+    private boolean camposVacios() {
+        return (jcBoxPuntos.getSelectedIndex() == -1 || (jcResolucion.getDate() == null) || jTableSiniestro.getSelectedRow() == -1);
     }
 }

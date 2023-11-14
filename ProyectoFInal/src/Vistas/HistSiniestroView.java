@@ -169,7 +169,7 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
         if (camposVacios()){
             JOptionPane.showMessageDialog(this,"Debes completar Fecha de Inicio y Final");
         }else{
-            cargarSiniestros();
+            //cargarSiniestros();
         }
     }//GEN-LAST:event_jbFiltrarActionPerformed
 
@@ -209,18 +209,18 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
         return ( (jcInicio.getDate()==null) || (jcFinal.getDate()==null));
     }
     
-    private void cargarSiniestros(){
-        modelo.setRowCount(0);
-        List<Siniestro> siniestros = new ArrayList();
-        siniestros = sd.listarSiniestrosResueltos();
-        LocalDate fi =  jcInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate ff =  jcFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        for(Siniestro s : siniestros){
-            LocalDate fr = s.getFecha_resol();
-            if ((fi.compareTo(fr)>=0) && (fr.compareTo(ff)>=0)){
-                modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getCodBrigada().getNombre_br(), s.getDetalle(), s.getFecha_siniestro().toString(),s.getPuntuacion(),s.getFecha_resol().toString()});
-            }
-        }
-    }
+//    private void cargarSiniestros(){
+//        modelo.setRowCount(0);
+//        List<Siniestro> siniestros = new ArrayList();
+//        siniestros = sd.listarSiniestrosResueltos();
+//        LocalDate fi =  jcInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        LocalDate ff =  jcFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//        for(Siniestro s : siniestros){
+//            LocalDate fr = s.getFecha_resol();
+//            if ((fi.compareTo(fr)>=0) && (fr.compareTo(ff)>=0)){
+//                modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getCodBrigada().getNombre_br(), s.getDetalle(), s.getFecha_siniestro().toString(),s.getPuntuacion(),s.getFecha_resol().toString()});
+//            }
+//        }
+//    }
 
 }
