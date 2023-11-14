@@ -7,6 +7,8 @@ import Entidades.Bomberos;
 import Entidades.Brigada;
 import Entidades.Cuartel;
 import Entidades.Siniestro;
+import Vistas.ResolSiniestroView;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -151,6 +153,7 @@ public class ProyectoFInal {
     //PROBAR CAMBIAR BRIGADA DE CUARTEL
     //brigada.actualizarBrigada(alfa);
     
+
     }
    
     
