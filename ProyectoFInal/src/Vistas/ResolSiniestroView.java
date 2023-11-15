@@ -8,6 +8,7 @@ import Data.*;
 import Entidades.*;
 import java.time.ZoneId;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -157,30 +158,32 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
 
-                                         
-    if (camposVacios()) {
-        JOptionPane.showMessageDialog(this, "Debes seleccionar un siniestro, luego una fecha de resolucion y una puntuacion del siniestro");
+          if (camposVacios()) {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar un siniestro, luego una fecha de resolución y una puntuación del siniestro");
     } else {
         try {
             Siniestro siniestro = new Siniestro();
             siniestro.setCodigo(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 0))));
 
+            // Procesar fecha de siniestro
             String fechaSiniestroString = String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 1));
-            LocalDateTime fechaSiniestroDateTime = LocalDateTime.parse(fechaSiniestroString);
+            DateTimeFormatter formatterSiniestro = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime fechaSiniestroDateTime = LocalDateTime.parse(fechaSiniestroString, formatterSiniestro);
             LocalDate fechaSiniestro = fechaSiniestroDateTime.toLocalDate();
             siniestro.setFecha_siniestro(fechaSiniestro.atStartOfDay());
 
-            siniestro.setTipo(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 2)));
-            siniestro.setCodBrigada(bd.buscarBrigada(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 3)))));
-            siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(),5)));
-            siniestro.setPuntuacion(Integer.parseInt(jcBoxPuntos.getSelectedItem().toString()));
-
-            LocalDateTime fechaResolucionDateTime = LocalDateTime.of(
-                    jcResolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                    LocalTime.MIDNIGHT
-            );
+            // Procesar fecha de resolución
+            LocalDate fechaResolucion = jcResolucion.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDateTime fechaResolucionDateTime = fechaResolucion.atStartOfDay();
             siniestro.setFecha_resol(fechaResolucionDateTime);
 
+            // Otros atributos
+            siniestro.setTipo(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 2)));
+            siniestro.setCodBrigada(bd.buscarBrigada(Integer.parseInt(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 3)))));
+            siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 5)));
+            siniestro.setPuntuacion(Integer.parseInt(jcBoxPuntos.getSelectedItem().toString()));
+
+            // Guardar el siniestro
             sd.completarSiniestro(siniestro);
             cargarSiniestros();
         } catch (DateTimeParseException | NumberFormatException ex) {
@@ -188,8 +191,6 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
             ex.printStackTrace(); // Opcional: Imprimir la traza de la excepción para depuración
         }
     }
-
-
 
 
     }//GEN-LAST:event_jbGuardarActionPerformed
@@ -228,7 +229,7 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         List<Siniestro> siniestros = new ArrayList();
         siniestros = sd.listarSiniestrosNOResueltos();
         for (Siniestro s : siniestros) {
-            modelo.addRow(new Object[]{s.getCodigo(), s.getFecha_siniestro().getYear()+"-"+s.getFecha_siniestro().getMonthValue()+"-"+s.getFecha_siniestro().getDayOfMonth(), s.getTipo(), s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
+            modelo.addRow(new Object[]{s.getCodigo(), s.getFecha_siniestro().getYear() + "-" + s.getFecha_siniestro().getMonthValue() + "-" + s.getFecha_siniestro().getDayOfMonth(), s.getTipo(), s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
         }
     }
 

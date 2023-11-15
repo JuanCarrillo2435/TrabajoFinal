@@ -126,4 +126,33 @@ public class SiniestroData {
         return siniestros;
     }
 
+    public void asignarBrigadaASiniestro(Brigada brigada, int codigo) {
+        try {
+            // Establecer la conexión y preparar la consulta
+            String sql = "UPDATE siniestro SET codBrigada=? WHERE codigo=?";
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            // Establecer los valores de los parámetros
+            statement.setInt(1, brigada.getCodBrigada());
+           // statement.setInt(1, codBrigada);
+            statement.setInt(2, codigo);
+
+            // Ejecutar la actualización
+            int filasAfectadas = statement.executeUpdate();
+
+            // Verificar si la actualización fue exitosa
+            if (filasAfectadas > 0) {
+                System.out.println("Se asignó la brigada al siniestro exitosamente.");
+            } else {
+                System.out.println("No se pudo asignar la brigada al siniestro.");
+            }
+
+            // Cerrar la conexión y el statement
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejo básico de excepciones. Considera un manejo más robusto en un entorno de producción.
+        }
+    }
+
 }

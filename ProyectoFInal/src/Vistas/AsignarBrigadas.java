@@ -1,4 +1,3 @@
-
 package Vistas;
 
 import Data.BrigadaData;
@@ -12,10 +11,20 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class AsignarBrigadas extends javax.swing.JInternalFrame {
+
+    Brigada brigadaSeleccionada = null;
+    CuartelData cuartelData = null;
+    Cuartel cuartelCercano = null;
+    SiniestroData asignarBri = null;
+    Siniestro sin = null;
     CuartelData cd = new CuartelData();
     BrigadaData bd = new BrigadaData();
     SiniestroData sd = new SiniestroData();
-        private DefaultTableModel modelo = new DefaultTableModel() {
+    private int coordX = 0;
+    private int coordY = 0;
+    private int codigoSiniestroSeleccionado = -1;
+    private int codigoBrigada = 0;
+    private DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCellEditable(int f, int c) {
             return false;
         }
@@ -27,6 +36,31 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         listarBrigadas();
         armarCabecera();
         llenarTabla();
+        cuartelData = new CuartelData();
+        asignarBri = new SiniestroData();  // O cualquier otra forma de inicialización que sea necesaria
+
+        jTable1.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = jTable1.getSelectedRow();
+                int columnCodigo = 0; // Ajusta este índice según la posición de la columna de código en tu modelo de tabla
+                // Obtener el código del siniestro de la fila seleccionada
+                codigoSiniestroSeleccionado = (int) jTable1.getValueAt(selectedRow, columnCodigo);
+
+                // Obtener valores de X e Y de la fila seleccionada
+                int columnX = 2; // Ajusta este índice según la posición de la columna X en tu modelo de tabla
+                int columnY = 3; // Ajusta este índice según la posición de la columna Y en tu modelo de tabla
+                int coordX = (int) jTable1.getValueAt(selectedRow, columnX);
+                int coordY = (int) jTable1.getValueAt(selectedRow, columnY);
+
+                cuartelCercano = cuartelData.cuartelCerca(coordX, coordY);
+                // Mostrar las coordenadas y el código del siniestro seleccionado
+                System.out.println("Coordenadas seleccionadas: X=" + coordX + ", Y=" + coordY);
+                System.out.println("Código del siniestro seleccionado: " + codigoSiniestroSeleccionado);
+            }
+        });
+        //brigadaSeleccionada = (Brigada) jCBrigada.getSelectedItem();
+        // codigoBrigada = brigadaSeleccionada.getCodBrigada();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -40,9 +74,9 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         jCuartel = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jCBrigada = new javax.swing.JComboBox<>();
-        jBDistancias = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLDistancias = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -66,16 +100,19 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Brigada");
 
-        jBDistancias.setText("Distancia del cuartel");
-        jBDistancias.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setText("ASIGNAR BRIGADA");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBDistanciasActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("ASIGNAR BRIGADA");
-
-        jLDistancias.setText("asda");
+        jButton1.setText("Calcular cuartel más cercano");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,21 +123,20 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 892, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jBDistancias)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLDistancias, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(62, 62, 62)
-                                .addComponent(jCuartel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(110, 110, 110)
-                                .addComponent(jLabel3)))
-                        .addGap(60, 60, 60)
+                        .addComponent(jLabel2)
+                        .addGap(62, 62, 62)
+                        .addComponent(jCuartel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel3)
+                        .addGap(23, 23, 23)
                         .addComponent(jCBrigada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(jButton2)))
+                        .addGap(100, 100, 100)
+                        .addComponent(jButton2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28)
+                        .addComponent(jLDistancias, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(411, 411, 411)))
                 .addContainerGap(52, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -123,24 +159,49 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBDistancias)
-                    .addComponent(jLDistancias))
+                    .addComponent(jLDistancias, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(42, 42, 42))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBDistanciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDistanciasActionPerformed
-//        Cuartel cuartel = (Cuartel)jCuartel.getSelectedItem();
-        jLDistancias.setText("El cuartel esta a: ");
-    }//GEN-LAST:event_jBDistanciasActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            Brigada brigadaSeleccionada = (Brigada) jCBrigada.getSelectedItem();
+
+            if (brigadaSeleccionada != null) {
+                asignarBri.asignarBrigadaASiniestro(brigadaSeleccionada, codigoSiniestroSeleccionado);
+                System.out.println("Se asignó la brigada al siniestro exitosamente.");
+
+                // Resto de tu lógica...
+            } else {
+                System.out.println("Seleccione una brigada de la lista.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Manejo básico de excepciones. Considera un manejo más robusto en un entorno de producción.
+        }
+
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        cuartelData.cuartelCerca(coordX, coordY);
+        if (cuartelCercano != null) {
+
+            jLDistancias.setText("Cuartel cercano: " + cuartelCercano.getNombre_cuartel()); // Ajusta según la estructura de tu Cuartel
+        } else {
+            jLDistancias.setText("No hay cuarteles disponibles.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBDistancias;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<Object> jCBrigada;
+    private javax.swing.JComboBox<Brigada> jCBrigada;
     private javax.swing.JComboBox<Cuartel> jCuartel;
     private javax.swing.JLabel jLDistancias;
     private javax.swing.JLabel jLabel1;
@@ -150,27 +211,31 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
- private void listarCuarteles(){
+    private void listarCuarteles() {
         List<Cuartel> cuarteles = new ArrayList();
         cuarteles = cd.listarCuarteles();
-        for(Cuartel c : cuarteles){
-             jCuartel.addItem(c);
+        for (Cuartel c : cuarteles) {
+            jCuartel.addItem(c);
         }
     }
- 
- private void listarBrigadas(){
-     Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
-     List<Brigada> brigadas = new ArrayList();
-     brigadas = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
-     for(Brigada b : brigadas){
-         if (b.isLibre()==true) {
-             jCBrigada.addItem(new Object[]{b.getCodBrigada()+"-"+b.getNombre_br()});
-         }
-         
-     }
- }
 
- private void armarCabecera() {
+    private void listarBrigadas() {
+        jCBrigada.removeAllItems(); // Limpia el combo box antes de agregar nuevos elementos
+        Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
+
+        if (cuartelSeleccionado != null) {
+            List<Brigada> brigadas = bd.listarBrigadasporCuartel(cuartelSeleccionado);
+
+            for (Brigada b : brigadas) {
+                if (b.isLibre()) {
+                    //jCBrigada.addItem(b.getCodBrigada() + "-" + b.getNombre_br());
+                    jCBrigada.addItem(b);
+                }
+            }
+        }
+    }
+
+    private void armarCabecera() {
         modelo.addColumn("Codigo");
         modelo.addColumn("Tipo");
         modelo.addColumn("X");
@@ -180,16 +245,12 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
     }
 
-
-private void llenarTabla(){
-    List<Siniestro> siniestrosIn = sd.listarSiniestrosNOResueltos();
-    modelo.setRowCount(0);
-    for (Siniestro s :siniestrosIn ) {
-        modelo.addRow(new Object[]{s.getCodigo(),s.getTipo(),s.getCoord_X(),s.getCoord_Y(),s.getDetalle()});
+    private void llenarTabla() {
+        List<Siniestro> siniestrosIn = sd.listarSiniestrosNOResueltos();
+        modelo.setRowCount(0);
+        for (Siniestro s : siniestrosIn) {
+            modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getDetalle()});
+        }
     }
-}
-
-
-
 
 }
