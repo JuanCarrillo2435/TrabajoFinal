@@ -2,7 +2,8 @@ package Entidades;
 
 import java.time.LocalDate;
 
-public class Bomberos {
+public class Bomberos implements Comparable<Bomberos>{
+    
     
     private int id_bombero;
     private String dni;
@@ -12,6 +13,7 @@ public class Bomberos {
     private Brigada codBrigada;
     private boolean estado;
 //AGREGAR
+    
     public Bomberos() {
     }
 
@@ -96,6 +98,17 @@ public class Bomberos {
     @Override
     public String toString() {
         return "Bomberos{" + "id_bombero=" + id_bombero + ", dni=" + dni + ", nombre_ape=" + nombre_ape + ", fecha_nac=" + fecha_nac + ", celular=" + celular + ", codBrigada=" + codBrigada.getCodBrigada();
+    }
+
+    @Override
+    public int compareTo(Bomberos o) {
+        if (id_bombero==o.id_bombero) {
+            return 0;
+        }else if(id_bombero>o.id_bombero){
+            return 1;
+        }else{
+            return -1;
+        }
     }
     
 }

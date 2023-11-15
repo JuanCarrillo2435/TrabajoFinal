@@ -9,6 +9,7 @@ import Data.BrigadaData;
 import Entidades.Bomberos;
 import Entidades.Brigada;
 import java.util.List;
+import java.util.TreeSet;
 import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
@@ -213,10 +214,10 @@ private DefaultTableModel modelo = new DefaultTableModel();
     private javax.swing.JTable jTtablabomberos;
     // End of variables declaration//GEN-END:variables
 
-    private void armarCBbrigadas(){
+  private void armarCBbrigadas(){
         // LISTAR BRIGADAS LIBRES
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.listarBrigadas();
+        List<Brigada> buscar2 = brigada.brigadasLibres();
     
     if (buscar2 != null) {
         for (int i = 0; i < buscar2.size(); i++) {
@@ -237,9 +238,9 @@ private DefaultTableModel modelo = new DefaultTableModel();
     
     private void bucle(){
             BomberosData bombero = new BomberosData();  
-    List<Bomberos> bomberos = bombero.listarBomberos();
+    TreeSet<Bomberos> bomberos = bombero.listarBomberos();
     BrigadaData brigada = new BrigadaData();
-    List<Brigada> buscar2 = brigada.listarBrigadas();
+    List<Brigada> buscar2 = brigada.brigadasLibres();
     String comboitem = (String) jCBfiltrobrigada.getSelectedItem();
     
     

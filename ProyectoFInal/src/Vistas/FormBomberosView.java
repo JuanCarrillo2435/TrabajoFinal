@@ -15,10 +15,13 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TreeSet;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -37,10 +40,10 @@ public boolean IsCellEditable (int fila,int columna){
      */
     public FormBomberosView() {
         initComponents();
-        this.setSize(1100, 650);
         armarCabecera();
         bucle();
         armarCBbrigadas();
+        limpiar();
         
     }
 
@@ -79,6 +82,7 @@ public boolean IsCellEditable (int fila,int columna){
         jBbuscar = new javax.swing.JButton();
         jBcrear = new javax.swing.JButton();
         jRBactivos = new javax.swing.JRadioButton();
+        jTFid = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTlistabomberos = new javax.swing.JTable();
@@ -156,9 +160,21 @@ public boolean IsCellEditable (int fila,int columna){
             }
         });
 
-        jTFdni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFdniActionPerformed(evt);
+        jTFdni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFdniKeyReleased(evt);
+            }
+        });
+
+        jTFnombre_ape.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFnombre_apeKeyReleased(evt);
+            }
+        });
+
+        jTFcelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFcelularKeyReleased(evt);
             }
         });
 
@@ -184,6 +200,8 @@ public boolean IsCellEditable (int fila,int columna){
             }
         });
 
+        jTFid.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -202,7 +220,8 @@ public boolean IsCellEditable (int fila,int columna){
                                     .addComponent(jTFdni, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jBbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTFnombre_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTFnombre_ape, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGap(64, 64, 64)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -232,7 +251,9 @@ public boolean IsCellEditable (int fila,int columna){
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(28, 28, 28)
+                .addComponent(jTFid, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jBbuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -347,10 +368,6 @@ public boolean IsCellEditable (int fila,int columna){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTFdniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFdniActionPerformed
-
-    }//GEN-LAST:event_jTFdniActionPerformed
-
     private void jTFapellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFapellidoActionPerformed
 
     }//GEN-LAST:event_jTFapellidoActionPerformed
@@ -361,71 +378,99 @@ public boolean IsCellEditable (int fila,int columna){
     }//GEN-LAST:event_jBbuscarActionPerformed
 
     private void jBmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmodificarActionPerformed
- // TODO add your handling code here:
-// MODIFICAR
-int filaseleccionada = jTlistabomberos.getSelectedRow();
+// MODIFICAR 
+String idString = jTFid.getText();
+String nuevodni = jTFdni.getText();
+String nuevonombre = jTFnombre_ape.getText();
+String nuevocelular = jTFcelular.getText();
 
-if (filaseleccionada >= 0) {
-    int id = (Integer) jTlistabomberos.getValueAt(filaseleccionada, 0);
-    boolean estado = (Boolean) jTlistabomberos.getValueAt(filaseleccionada, 6);
+try {
+    int id = Integer.parseInt(idString);
 
-    String nuevoDni = jTFdni.getText();
-    String nuevoNombre = jTFnombre_ape.getText();
+    // Validar que el DNI sea numérico
+    long dni = Long.parseLong(nuevodni);
 
-    // Obtener la fecha del JDateChooser
+    // Validar que el nombre solo contenga letras
+    if (!nuevonombre.matches("^[a-zA-Z]+$")) {
+        throw new IllegalArgumentException("El nombre debe contener solo letras.");
+    }
+
+    // Obtener la fecha de nacimiento
     LocalDate nuevafecha = jDCnacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        String nuevoCelular = jTFcelular.getText();
-        
-        BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
-        for (Brigada brii: buscar2) {
-            if (brii.getNombre_br().equals(jCBbrigada.getSelectedItem())) {
-                Brigada nuevaBrigada = brii;
-                        Bomberos bombero = new Bomberos(id, nuevoDni, nuevoNombre, nuevafecha, nuevoCelular, nuevaBrigada, estado);
-        BomberosData databomb = new BomberosData();
-        databomb.actualizarBombero(bombero);
-        modelo.setRowCount(0);
-        bucle();
-        break;
+    // Validar la edad del bombero
+    int edad = Period.between(nuevafecha, LocalDate.now()).getYears();
+    if (edad < 18 || edad > 60) {
+        throw new IllegalArgumentException("El bombero debe tener entre 18 y 60 años.");
+    }
+
+    // Validar que el celular sea numérico
+    long celular = Long.parseLong(nuevocelular);
+
+    // Resto del código
+    BrigadaData brigada = new BrigadaData();
+    List<Brigada> buscar2 = brigada.brigadasLibres();
+
+    for (Brigada brii : buscar2) {
+        if (brii.getNombre_br().equals(jCBbrigada.getSelectedItem())) {
+            Brigada nuevaBrigada = brii;
+            Boolean estado = true;
+
+            Bomberos bombero = new Bomberos(id, nuevodni, nuevonombre, nuevafecha, nuevocelular, nuevaBrigada, estado);
+            BomberosData databomb = new BomberosData();
+
+            if (chequearBrigadas(bombero) == 5) {
+                JOptionPane.showMessageDialog(null, " No se pueden añadir más bomberos a esta brigada.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (chequearBrigadas(bombero) > 1) {
+                JOptionPane.showMessageDialog(null, "Brigada habilitada");
+                databomb.actualizarBombero(bombero);
+            } else if (chequearBrigadas(bombero) == 0) {
+                JOptionPane.showMessageDialog(null, "La brigada aún no está habilitada");
+                databomb.actualizarBombero(bombero);
             }
-    }   
-//        Brigada nuevaBrigada = (Brigada) jCBbrigada.getSelectedItem();
 
-
-
+            modelo.setRowCount(0);
+            bucle();
+            break;
+        }
+    }
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(null, "Error de formato: Asegúrate de ingresar números en los campos de ID, DNI y Celular.", "Error", JOptionPane.ERROR_MESSAGE);
+} catch (IllegalArgumentException e) {
+    JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+} catch (Exception e) {
+    JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 }
 
     }//GEN-LAST:event_jBmodificarActionPerformed
 
     private void jTlistabomberosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTlistabomberosMouseClicked
-        // TODO add your handling code here:
-        //obtener elementos de Table
-        
+       //obtener elementos de Table
+
 
         int filaseleccionada = jTlistabomberos.getSelectedRow();
         if (filaseleccionada != -1) {
-            int id=(Integer) jTlistabomberos.getValueAt(filaseleccionada, 0);
+            Integer id = (Integer) jTlistabomberos.getValueAt(filaseleccionada, 0);
+            String idString = String.valueOf(id);
             String dni=(String) jTlistabomberos.getValueAt(filaseleccionada, 1);
             String nombre=(String) jTlistabomberos.getValueAt(filaseleccionada, 2);
             LocalDate fecha=  (LocalDate) jTlistabomberos.getValueAt(filaseleccionada, 3);
             String celular=(String) jTlistabomberos.getValueAt(filaseleccionada, 4);
-            String codigo=(String) jTlistabomberos.getValueAt(filaseleccionada, 5);
-            boolean estado=(Boolean)jTlistabomberos.getValueAt(filaseleccionada, 6);
-            
+            String codigo= (String) jTlistabomberos.getValueAt(filaseleccionada, 5);
+            jTFid.setText(idString);
             jTFdni.setText(dni);
             jTFnombre_ape.setText(nombre);
-            
+
             //cambiar localdate a date
             Date date = java.sql.Date.valueOf(fecha);
             jDCnacimiento.setDate(date);
             jTFcelular.setText(celular);
-            
+
             // Obtén el valor de la celda correspondiente al combo box
-//                    
-                    
-                    
-            // Encuentra el índice del valor en el modelo del combo box
+//
+
+
+//             Encuentra el índice del valor en el modelo del combo box
             for (int i = 0; i < jCBbrigada.getItemCount(); i++) {
             if (codigo.equals(jCBbrigada.getItemAt(i))) {
             // Establece el índice como la selección actual en el combo box
@@ -452,8 +497,7 @@ if (filaseleccionada >= 0) {
     }//GEN-LAST:event_jBlimpiarActionPerformed
 
     private void jBdarBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdarBajaActionPerformed
-        // TODO add your handling code here:
-       //DAR DE BAJA
+ //DAR DE BAJA
      int filaseleccionada = jTlistabomberos.getSelectedRow();
 
     if (filaseleccionada >= 0) {
@@ -477,42 +521,81 @@ if (filaseleccionada >= 0) {
         bucle();
         break;
             }
-    }   
-//        Brigada nuevaBrigada = (Brigada) jCBbrigada.getSelectedItem();
-
-
-
-}
+    }  }
     }//GEN-LAST:event_jBdarBajaActionPerformed
 
     private void jBcrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBcrearActionPerformed
-        // TODO add your handling code here:
-        //CREAR BOMBEROS
-            String dni=       jTFdni.getText();
-            String nombre =jTFnombre_ape.getText();
-            
-            //cambiar date a localdate
-            LocalDate fecha = jDCnacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            String celular =jTFcelular.getText();
-            Boolean estado = true;
-            // Obtén el valor de la celda correspondiente al combo box                 
-            BrigadaData brigada = new BrigadaData();
-            List<Brigada> buscar2 = brigada.brigadasLibres();
-            for (Brigada brii: buscar2) {
-            for (int i = 0; i < jCBbrigada.getItemCount(); i++) {
-            if (brii.getNombre_br().equals(jCBbrigada.getSelectedItem())) {
-            
-                Bomberos bombero = new Bomberos( dni, nombre, fecha, celular, brii, estado);
+        try {
+    // Validar DNI (debería ser numérico)
+    int dniNumero = Integer.parseInt(jTFdni.getText());
+    String dni = String.valueOf(dniNumero);
+
+    // Validar nombre (debería ser solo letras)
+    String nombre = jTFnombre_ape.getText();
+    if (!nombre.matches("[a-zA-Z]+")) {
+        throw new IllegalArgumentException("El nombre debe contener solo letras.");
+    }
+
+    // Validar celular (debería ser numérico)
+    long celularNumero = Long.parseLong(jTFcelular.getText());
+    String celular = String.valueOf(celularNumero);
+
+    // Validar fecha (debería estar entre 18 y 60 años)
+    LocalDate fecha = jDCnacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    LocalDate fechaActual = LocalDate.now();
+    int edad = Period.between(fecha, fechaActual).getYears();
+
+    if (edad < 18 || edad > 60) {
+        throw new IllegalArgumentException("La edad del bombero debe estar entre 18 y 60 años.");
+    }
+    boolean estado = true;
+    // Obtener el valor del combo box
+    BrigadaData brigada = new BrigadaData();
+    List<Brigada> brigadasLibres = brigada.brigadasLibres();
+
+    // Validar que la brigada seleccionada sea válida
+    if (jCBbrigada.getSelectedItem() != null) {
+        String nombreBrigadaSeleccionada = jCBbrigada.getSelectedItem().toString();
+
+        boolean brigadaEncontrada = false;
+        for (Brigada brii : brigadasLibres) {
+            if (brii.getNombre_br().equals(nombreBrigadaSeleccionada)) {
+                // Crear y añadir a la tabla
+                Bomberos bombero = new Bomberos(dni, nombre, fecha, celular, brii, estado);
                 BomberosData databomb = new BomberosData();
-                databomb.CrearBombero(bombero);
+                if (chequearBrigadas(bombero)==5) {
+                    JOptionPane.showMessageDialog(null, " No se pueden añadir mas bomberos a esta brigada.", "Error", JOptionPane.ERROR_MESSAGE);
+                }else if(chequearBrigadas(bombero)>1){
+                    JOptionPane.showMessageDialog(null, "Brigada habilitada");
+                    databomb.CrearBombero(bombero);
+                }else if(chequearBrigadas(bombero) == 0){
+                    JOptionPane.showMessageDialog(null, "La brigada aun no esta habilitada");
+                    databomb.CrearBombero(bombero);
+
+                }
                 
                 
+
                 modelo.setRowCount(0);
                 bucle();
+                brigadaEncontrada = true;
                 break;
             }
-            }
-            }
+        }
+
+        if (!brigadaEncontrada) {
+            throw new IllegalArgumentException("La brigada seleccionada no es válida.");
+        }
+    } else {
+        throw new IllegalArgumentException("Selecciona una brigada.");
+    }
+} catch (NumberFormatException e) {
+    // Mostrar mensaje de error al usuario usando JOptionPane
+    JOptionPane.showMessageDialog(null, "Error: El DNI o el celular deben ser valores numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+} catch (IllegalArgumentException e) {
+    // Mostrar mensaje de error al usuario usando JOptionPane
+    JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+}
     }//GEN-LAST:event_jBcrearActionPerformed
 
     private void jRBactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRBactivosActionPerformed
@@ -520,6 +603,85 @@ if (filaseleccionada >= 0) {
         modelo.setRowCount(0);
         bucle();
     }//GEN-LAST:event_jRBactivosActionPerformed
+
+    private void jTFdniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFdniKeyReleased
+        BomberosData bombero = new BomberosData();
+              TreeSet<Bomberos> buscabom = bombero.listarBomberos();
+              BrigadaData brigada = new BrigadaData();
+              List<Brigada> buscar2 = brigada.brigadasLibres();
+              modelo.setRowCount(0);
+        for(Bomberos bom : buscabom){
+            if (bom.getDni().startsWith(jTFdni.getText())) {
+                Brigada codbom = bom.getCodBrigada();
+                for (Brigada brii: buscar2) {
+                    if (brii.getCodBrigada()== codbom.getCodBrigada()) {
+
+
+                if (jRBactivos.isSelected()) {
+                         if (bom.isEstado()==true) {
+                             cargarBombero(bom,brii);
+                         }
+                     }else if(bom.isEstado()==false){
+                         cargarBombero(bom,brii);
+                     }
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_jTFdniKeyReleased
+
+    private void jTFcelularKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcelularKeyReleased
+        BomberosData bombero = new BomberosData();  
+              TreeSet<Bomberos> buscabom = bombero.listarBomberos();
+              BrigadaData brigada = new BrigadaData();
+              List<Brigada> buscar2 = brigada.brigadasLibres();
+              modelo.setRowCount(0);
+        for(Bomberos bom : buscabom){
+            if (bom.getCelular().startsWith(jTFcelular.getText())) {
+                Brigada codbom = bom.getCodBrigada();
+                for (Brigada brii: buscar2) {
+                    if (brii.getCodBrigada()== codbom.getCodBrigada()) {
+                        
+                 
+                if (jRBactivos.isSelected()) {
+                         if (bom.isEstado()==true) {
+                             cargarBombero(bom,brii);
+                         }
+                     }else if(bom.isEstado()==false){
+                         cargarBombero(bom,brii);
+                     }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jTFcelularKeyReleased
+
+    private void jTFnombre_apeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombre_apeKeyReleased
+        BomberosData bombero = new BomberosData();  
+              TreeSet<Bomberos> buscabom = bombero.listarBomberos();
+              BrigadaData brigada = new BrigadaData();
+              List<Brigada> buscar2 = brigada.brigadasLibres();
+              modelo.setRowCount(0);
+        for(Bomberos bom : buscabom){
+            if (bom.getNombre_ape().startsWith(jTFnombre_ape.getText())) {
+                Brigada codbom = bom.getCodBrigada();
+                for (Brigada brii: buscar2) {
+                    if (brii.getCodBrigada()== codbom.getCodBrigada()) {
+                        
+                 
+                if (jRBactivos.isSelected()) {
+                         if (bom.isEstado()==true) {
+                             cargarBombero(bom,brii);
+                         }
+                     }else if(bom.isEstado()==false){
+                         cargarBombero(bom,brii);
+                     }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jTFnombre_apeKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -551,12 +713,14 @@ if (filaseleccionada >= 0) {
     private javax.swing.JTextField jTFapellido;
     private javax.swing.JTextField jTFcelular;
     private javax.swing.JTextField jTFdni;
+    private javax.swing.JTextField jTFid;
     private javax.swing.JTextField jTFnombre_ape;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTable jTlistabomberos;
     // End of variables declaration//GEN-END:variables
-    private void armarCabecera(){
+
+   private void armarCabecera(){
     modelo.addColumn("ID");
     modelo.addColumn("D.N.I");
     modelo.addColumn("Nombre y Apellido");
@@ -567,10 +731,10 @@ if (filaseleccionada >= 0) {
     jTlistabomberos.setModel(modelo);
 }
     private void bucle(){
-          BomberosData bombero = new BomberosData();  
-    List<Bomberos> bomberos = bombero.listarBomberos();
-    BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.listarBrigadas();
+        BomberosData bombero = new BomberosData();  
+        TreeSet<Bomberos> bomberos = bombero.listarBomberos();
+        BrigadaData brigada = new BrigadaData();
+        List<Brigada> buscar2 = brigada.brigadasLibres();
         
         for (Bomberos bom : bomberos) {
             Brigada brigas = bom.getCodBrigada();
@@ -591,15 +755,15 @@ if (filaseleccionada >= 0) {
             
     }
     }
-     private void cargarBombero (Bomberos bombero, Brigada briga){
+     private void cargarBombero (Bomberos bombero, Brigada brigada){
          
-        modelo.addRow(new Object[]{bombero.getId_bombero(), bombero.getDni(),bombero.getNombre_ape(),bombero.getFecha_nac(),bombero.getCelular(),briga.getNombre_br(),bombero.isEstado()});
+        modelo.addRow(new Object[]{bombero.getId_bombero(), bombero.getDni(),bombero.getNombre_ape(),bombero.getFecha_nac(),bombero.getCelular(),brigada.getNombre_br(),bombero.isEstado()});
     }
 
          private void armarCBbrigadas(){
         // LISTAR BRIGADAS LIBRES
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.listarBrigadas();
+        List<Brigada> buscar2 = brigada.brigadasLibres();
     
     if (buscar2 != null) {
         for (int i = 0; i < buscar2.size(); i++) {
@@ -608,4 +772,36 @@ if (filaseleccionada >= 0) {
         }
     }
     }
+         
+         private void limpiar(){
+                 // Campos de texto
+    jTFdni.setText("");
+    jTFnombre_ape.setText("");
+    jTFcelular.setText("");
+    
+     // JDateChooser
+    jDCnacimiento.setDate(null);  // Establece la fecha en null para borrarla
+    
+     // JComboBox
+    jCBbrigada.setSelectedItem(null);
+         }
+         
+         private int chequearBrigadas(Bomberos bomberoañadir){
+        BomberosData bombero = new BomberosData();  
+        TreeSet<Bomberos> buscarbom = bombero.listarBomberos();
+        int cantidadbom = 0;
+        for (Bomberos bom : buscarbom) {
+            Brigada bomberoañadirbri = bomberoañadir.getCodBrigada();
+            if (bom.isEstado()!= false) {
+                    Brigada bomberobri = bom.getCodBrigada();
+                if (bomberoañadirbri.getCodBrigada()==bomberobri.getCodBrigada()) {
+                cantidadbom ++;
+               
+            }
+            }
+
+        }
+        
+         return cantidadbom;
+         }
 }

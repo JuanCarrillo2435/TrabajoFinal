@@ -19,10 +19,10 @@ public class ProyectoFInal {
         Scanner leer = new Scanner(System.in).useDelimiter("\n");
         
         //CREAR CUARTELES
-        CuartelData cuartel = new CuartelData();
-       Cuartel c1 = new Cuartel("Santa Rita","Av. Siempre Viva 843",32,123,"+ 1555-123-4567","cuartelsantarita@gmail.com",true);
-       Cuartel c2 = new Cuartel("San Patricio","Maipu",10,10,"+ 0800-666-4592","cuartelmaipu@gmail.com",true);
-//        cuartel.crearCuartel(c2);
+//        CuartelData cuartel = new CuartelData();
+//       Cuartel c1 = new Cuartel("Santa Rita","Av. Siempre Viva 843",32,123,"+ 1555-123-4567","cuartelsantarita@gmail.com",true);
+//       Cuartel c2 = new Cuartel("San Patricio","Maipu",10,10,"+ 0800-666-4592","cuartelmaipu@gmail.com",true);
+////        cuartel.crearCuartel(c2);
         
         
 
@@ -38,18 +38,18 @@ public class ProyectoFInal {
 
 
 //---------------------------------------------
-//CREAR BRIGADAS
-    Brigada bri = new Brigada();
-        BrigadaData brigada = new BrigadaData();
-//       Brigada alfa = new Brigada("Gama","Incendios en industrias y fábricas",true, c1);
-//        
-//     brigada.crearBrigada(alfa);
-
-
-//-----------------------------------------------------
-//CREAR BOMBEROS
+////CREAR BRIGADAS
+//    Brigada bri = new Brigada();
+//        BrigadaData brigada = new BrigadaData();
+////       Brigada alfa = new Brigada("Gama","Incendios en industrias y fábricas",true, c1);
+////        
+////     brigada.crearBrigada(alfa);
 //
-    BomberosData bombero = new BomberosData();
+//
+////-----------------------------------------------------
+////CREAR BOMBEROS
+////
+//    BomberosData bombero = new BomberosData();
     //Bomberos b1 = new Bomberos(4,"12112121","Pedro RompePiedras",LocalDate.of(2000,Month.APRIL,12),"2664121333",alfa, true);
    //Bomberos b2 = new Bomberos("42744243","El chavo del 8",LocalDate.of(2000,Month.AUGUST,28),"2664288564",alfa, true);
     
@@ -60,17 +60,17 @@ public class ProyectoFInal {
 //Listar Bomberos
 
 
- List<Bomberos> listar = bombero.listarBomberos();
- 
-        if (listar !=null) {
-            for (int i = 0; i < listar.size(); i++) {
-                Bomberos bom = listar.get(i);
-                System.out.println(bom);
-            
-            }
-        }else{
-            System.out.println("Lista nula");
-        }
+// List<Bomberos> listar = bombero.listarBomberos();
+// 
+//        if (listar !=null) {
+//            for (int i = 0; i < listar.size(); i++) {
+//                Bomberos bom = listar.get(i);
+//                System.out.println(bom);
+//            
+//            }
+//        }else{
+//            System.out.println("Lista nula");
+//        }
 
 //   if (buscarCon!=null) {
 //            for (int i = 0; i < buscarCon.size(); i++) {
@@ -87,16 +87,16 @@ public class ProyectoFInal {
 //----------------------------------------------------
 //CREAR SINIESTRO
 
-    SiniestroData siniestro = new SiniestroData();
-  //  Siniestro s1 = new Siniestro("Incendio de planta induestrial",LocalDate.of(2023, Month.MARCH, 11),22,76,"Cortocircuito");
-    //Siniestro s1 = new Siniestro(LocalDate.of(2023, Month.AUGUST, 12), 7,3);
-    //siniestro.crearSiniestro(s1);
-   // Siniestro s2 = new Siniestro(s1.getCodigo() ,LocalDate.of(2023, Month.AUGUST, 12), 7, bri.setCodBrigada(4));
-    //PROBANDO ACTUALIZAR SINIESTRO
-    //siniestro.completarSiniestro(s2);
-   
- //  LISTAR SINIESTROS NO LIBRES
-   List<Siniestro> buscarSin = siniestro.listarSiniestrosNOResueltos();
+//    SiniestroData siniestro = new SiniestroData();
+//  //  Siniestro s1 = new Siniestro("Incendio de planta induestrial",LocalDate.of(2023, Month.MARCH, 11),22,76,"Cortocircuito");
+//    //Siniestro s1 = new Siniestro(LocalDate.of(2023, Month.AUGUST, 12), 7,3);
+//    //siniestro.crearSiniestro(s1);
+//   // Siniestro s2 = new Siniestro(s1.getCodigo() ,LocalDate.of(2023, Month.AUGUST, 12), 7, bri.setCodBrigada(4));
+//    //PROBANDO ACTUALIZAR SINIESTRO
+//    //siniestro.completarSiniestro(s2);
+//   
+// //  LISTAR SINIESTROS NO LIBRES
+//   List<Siniestro> buscarSin = siniestro.listarSiniestrosNOResueltos();
 //   List<Siniestro> buscarCon = siniestro.listarSiniestrosResueltos();
 //   
 //   if (buscarCon!=null) {
@@ -124,27 +124,27 @@ public class ProyectoFInal {
 
 //-------------------------------------------------------------
 //Listar Brigadas No libres
-     List <Brigada> buscar = brigada.brigadasNOLibres();
-     List <Brigada> buscar2 = brigada.brigadasLibres();
-        if (buscar==null) {
-            for (int i = 0; i < buscar.size(); i++) {
-                Brigada brii = buscar.get(i);
-                 System.out.println(brii);
-            }
-            
-        } else{
-            System.out.println("Lista nula");
-        }
-  //  LISTAR BRIGADAS LIBRES
-    if (buscar2!=null) {
-            for (int i = 0; i < buscar2.size(); i++) {
-                Brigada brii = buscar2.get(i);
-                 System.out.println(brii);
-            }
-            
-        } else{
-            System.out.println("Lista nula");
-        }
+//     List <Brigada> buscar = brigada.brigadasNOLibres();
+//     List <Brigada> buscar2 = brigada.brigadasLibres();
+//        if (buscar==null) {
+//            for (int i = 0; i < buscar.size(); i++) {
+//                Brigada brii = buscar.get(i);
+//                 System.out.println(brii);
+//            }
+//            
+//        } else{
+//            System.out.println("Lista nula");
+//        }
+//  //  LISTAR BRIGADAS LIBRES
+//    if (buscar2!=null) {
+//            for (int i = 0; i < buscar2.size(); i++) {
+//                Brigada brii = buscar2.get(i);
+//                 System.out.println(brii);
+//            }
+//            
+//        } else{
+//            System.out.println("Lista nula");
+//        }
 //    //PROBAR DISTANCIA
 //        System.out.println(" La distancia entre el cuartel y el sinietro es : "+cuartel.distancia(c1.getCoord_X(), c1.getCoord_Y(), s1.getCoord_X(), s1.getCoord_Y()));
 //    //PROBAR QUÉ CUARTEL ESTÁ MÁS CERCANO

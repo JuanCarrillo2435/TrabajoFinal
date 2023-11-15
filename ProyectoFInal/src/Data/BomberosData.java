@@ -6,6 +6,7 @@ import Entidades.Brigada;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -92,8 +93,8 @@ public class BomberosData {
             }
     }
     
-    public List<Bomberos> listarBomberos(){
-        List<Bomberos> listar = new ArrayList(); 
+    public TreeSet<Bomberos> listarBomberos(){
+        TreeSet<Bomberos> listar = new TreeSet(); 
         String sql ="SELECT id_bombero, dni, nombre_ape, fecha_nac, celular, codBrigada, estado FROM bombero";
             try {
                 PreparedStatement ps = con.prepareStatement(sql);
