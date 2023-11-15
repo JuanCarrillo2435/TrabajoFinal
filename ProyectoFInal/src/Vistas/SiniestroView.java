@@ -60,6 +60,8 @@ public class SiniestroView extends javax.swing.JInternalFrame {
         jTextX = new javax.swing.JTextField();
         jTextY = new javax.swing.JTextField();
 
+        setClosable(true);
+
         jLabel1.setText("jLabel1");
 
         jLabel2.setText("Detalle");

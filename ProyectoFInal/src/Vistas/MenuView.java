@@ -52,8 +52,9 @@ public class MenuView extends javax.swing.JFrame {
         jCListaBrigada = new javax.swing.JCheckBoxMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMBrigadaxSiniestro = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
@@ -131,7 +132,7 @@ public class MenuView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Siniestro");
+        jMBrigadaxSiniestro.setText("Siniestro");
 
         jMenuItem6.setText("Crear siniestro");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -139,7 +140,15 @@ public class MenuView extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem6);
+        jMBrigadaxSiniestro.add(jMenuItem6);
+
+        jMenuItem3.setText("Asignar Brigada a Siniestro");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMBrigadaxSiniestro.add(jMenuItem3);
 
         jMenuItem7.setText("Resolucion de siniestro");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +156,7 @@ public class MenuView extends javax.swing.JFrame {
                 jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem7);
+        jMBrigadaxSiniestro.add(jMenuItem7);
 
         jMenuItem8.setText("Historial de siniestro");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -155,9 +164,9 @@ public class MenuView extends javax.swing.JFrame {
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        jMBrigadaxSiniestro.add(jMenuItem8);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMBrigadaxSiniestro);
 
         jMenu5.setText("Distancias");
         jMenuBar1.add(jMenu5);
@@ -223,7 +232,11 @@ public class MenuView extends javax.swing.JFrame {
     }//GEN-LAST:event_jCFormBrigadaActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        escritorio.removeAll();
+        escritorio.repaint();
+        AsignarBrigadas brigada = new AsignarBrigadas();
+        brigada.setVisible(true);
+        escritorio.add(brigada);
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -304,10 +317,10 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JCheckBoxMenuItem jCFormBrigada;
     private javax.swing.JCheckBoxMenuItem jCListaBrigada;
+    private javax.swing.JMenu jMBrigadaxSiniestro;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -315,6 +328,7 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;

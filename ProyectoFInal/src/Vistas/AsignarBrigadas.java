@@ -44,6 +44,8 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jLDistancias = new javax.swing.JLabel();
 
+        setClosable(true);
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Siniestros");
 
