@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2023 a las 22:58:09
+-- Tiempo de generación: 14-11-2023 a las 20:40:14
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -43,8 +43,9 @@ CREATE TABLE `bombero` (
 
 INSERT INTO `bombero` (`id_bombero`, `dni`, `nombre_ape`, `fecha_nac`, `celular`, `codBrigada`, `estado`) VALUES
 (2, '12112121', 'Pedro RompePiedras', '2000-04-12', '2664121333', 3, 1),
-(4, '42744243', 'El chavo del 8', '2000-08-28', '2664288564', 3, 1),
-(6, '42111111', 'Monolo Lamas', '2001-08-12', '2664438564', 3, 1);
+(4, '42744243', 'El chavo del 8', '2000-08-28', '2664288564', 3, 0),
+(6, '42111111', 'Monolo Lamas', '2001-08-12', '2664438564', 3, 1),
+(8, '98998989', 'Roberto Carlos', '1998-11-12', '2664989898', 6, 1);
 
 -- --------------------------------------------------------
 
@@ -66,11 +67,14 @@ CREATE TABLE `brigada` (
 --
 
 INSERT INTO `brigada` (`codBrigada`, `nombre_br`, `especialidad`, `libre`, `nro_cuartel`, `estado`) VALUES
-(3, 'Alfa', 'Incendios en viviendas, e indu', 1, 1, 0),
-(4, 'Petta', 'Salvamento en derrumbes', 0, 2, 0),
-(6, 'Fitta', 'Operativos de prevención.', 1, 1, 0),
-(7, 'Merma', 'Rescates en ámbito montaña', 1, 2, 0),
-(8, 'Meme', 'Rescates en ámbito montaña', 1, 1, 0);
+(3, 'Alfa', 'Incendios en viviendas, e indu', 1, 1, 1),
+(4, 'Petta', 'Salvamento en derrumbes', 0, 2, 1),
+(6, 'Fitta', 'Operativos de prevención.', 1, 1, 1),
+(7, 'Merma', 'Rescates en ámbito montaña', 0, 2, 1),
+(8, 'Meme', 'Rescates en ámbito montaña', 1, 1, 1),
+(9, 'Mema', 'Rescate de personas atrapadas ', 1, 4, 1),
+(10, 'Mengache', 'Operativos de prevención.', 0, 3, 1),
+(11, 'Lele', 'Socorrer inundaciones', 0, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -94,8 +98,10 @@ CREATE TABLE `cuartel` (
 --
 
 INSERT INTO `cuartel` (`codCuartel`, `nombre_cuartel`, `direccion`, `coord_X`, `coord_Y`, `telefono`, `correo`, `estado`) VALUES
-(1, 'Santa Magdalena', 'Av. Siempre Viva 843', 32, 123, '+ 1555-123-4567', 'cuartelsantarita@gmail.com', 0),
-(2, 'Jesus Maria', 'Av España 123', 12, 32, '2664321221', 'cuartelmariajesus@gmail.com', 0);
+(1, 'Santa Magdalena', 'Av. Siempre Viva 843', 32, 123, '+ 1555-123-4567', 'cuartelsantarita@gmail.com', 1),
+(2, 'Jesus Maria', 'Av España 123', 12, 32, '2664321221', 'cuartelmariajesus@gmail.com', 1),
+(3, 'Santa Catalina', 'Av Rosas 223', 32, 12, '2664898989', 'scatalina@gmail.com', 1),
+(4, 'San Miguel', 'Balcarce 123', 65, 22, '2664121212', 'estacionsmiguel@gmial.com', 1);
 
 -- --------------------------------------------------------
 
@@ -154,7 +160,7 @@ ALTER TABLE `cuartel`
 --
 ALTER TABLE `siniestro`
   ADD PRIMARY KEY (`codigo`),
-  ADD UNIQUE KEY `tipo` (`tipo`);
+  ADD KEY `siniestro_ibfk_1` (`codBrigada`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -164,19 +170,19 @@ ALTER TABLE `siniestro`
 -- AUTO_INCREMENT de la tabla `bombero`
 --
 ALTER TABLE `bombero`
-  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `brigada`
 --
 ALTER TABLE `brigada`
-  MODIFY `codBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `codBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `cuartel`
 --
 ALTER TABLE `cuartel`
-  MODIFY `codCuartel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codCuartel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `siniestro`
