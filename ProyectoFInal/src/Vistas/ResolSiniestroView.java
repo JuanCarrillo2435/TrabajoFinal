@@ -228,7 +228,7 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
         List<Siniestro> siniestros = new ArrayList();
         siniestros = sd.listarSiniestrosNOResueltos();
         for (Siniestro s : siniestros) {
-            modelo.addRow(new Object[]{s.getCodigo(), s.getFecha_siniestro().toString(), s.getTipo(), s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
+            modelo.addRow(new Object[]{s.getCodigo(), s.getFecha_siniestro().getYear()+"-"+s.getFecha_siniestro().getMonthValue()+"-"+s.getFecha_siniestro().getDayOfMonth(), s.getTipo(), s.getCodBrigada().getCodBrigada(), s.getCodBrigada().getNombre_br(), s.getDetalle()});
         }
     }
 
