@@ -27,7 +27,6 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
         listarCuarteles();
         armarCabecera();
         cargarBrigadasLibres();
-        cargarBrigadasnoLibres();
         borrarFila();
     }
 
@@ -154,20 +153,6 @@ public class ListarBrigadas extends javax.swing.JInternalFrame {
                      modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
                 }
                
-            }
-
-        }
-
-    }
-    
-        private void cargarBrigadasnoLibres() {
-        Cuartel cuartelSeleccionado = (Cuartel) jCuartel.getSelectedItem();
-        modelo.setRowCount(0);
-        List<Brigada> listaBrigadasLibres = (ArrayList) bd.listarBrigadasporCuartel(cuartelSeleccionado);
-
-        for (Brigada brigada : listaBrigadasLibres) {
-            if (brigada.isLibre() == false) {
-                modelo.addRow(new Object[]{brigada.getCodBrigada(), brigada.getNombre_br(), brigada.getEspecialidad()});
             }
 
         }
