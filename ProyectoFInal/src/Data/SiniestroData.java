@@ -52,7 +52,7 @@ public class SiniestroData {
         String sql = "UPDATE siniestro SET fecha_resol=?, puntuacion=?, codBrigada=? WHERE codigo = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setDate(1, Date.valueOf(siniestro.getFecha_resol().toLocalDate()));
+            ps.setTimestamp(1, Timestamp.valueOf(siniestro.getFecha_resol()));
             ps.setInt(2, siniestro.getPuntuacion());
             ps.setInt(3, siniestro.getCodBrigada().getCodBrigada());
             ps.setInt(4, siniestro.getCodigo());
@@ -142,7 +142,7 @@ public class SiniestroData {
 
             // Verificar si la actualización fue exitosa
             if (filasAfectadas > 0) {
-                System.out.println("Se asignó la brigada al siniestro exitosamente.");
+                JOptionPane.showMessageDialog(null, "\"Se asignó la brigada al siniestro exitosamente.\"");
             } else {
                 System.out.println("No se pudo asignar la brigada al siniestro.");
             }
