@@ -57,7 +57,6 @@ public class MenuView extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
 
         jMenu6.setText("jMenu6");
 
@@ -167,9 +166,6 @@ public class MenuView extends javax.swing.JFrame {
         jMBrigadaxSiniestro.add(jMenuItem8);
 
         jMenuBar1.add(jMBrigadaxSiniestro);
-
-        jMenu5.setText("Distancias");
-        jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
 
@@ -321,7 +317,6 @@ public class MenuView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
