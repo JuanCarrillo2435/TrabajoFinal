@@ -83,8 +83,8 @@ public class SiniestroData {
                 s.setFecha_resol(rs.getTimestamp("fecha_resol").toLocalDateTime());
                 s.setPuntuacion(rs.getInt("puntuacion"));
 
-                Brigada brigada = new Brigada();
-                brigada.setCodBrigada(rs.getInt("codBrigada"));
+                Brigada brigada;
+                brigada= bd.buscarBrigada(rs.getInt("codBrigada"));
                 // s.setCodBrigada(rs.getInt("codBrigada"));
                 s.setCodBrigada(brigada);
                 siniestros.add(s);
@@ -105,17 +105,20 @@ public class SiniestroData {
               ResultSet rs = ps.executeQuery();
               while(rs.next()){
                   Siniestro s = new Siniestro();
-                  //s.setCodBrigada(rs.getInt("codigo"));
-                  Brigada brigada = new Brigada();
-                  brigada = bd.buscarBrigada(rs.getInt("codBrigada"));
-                  s.setCodBrigada(brigada);
-                  s.setFecha_siniestro(rs.getTimestamp("fecha_siniestro").toLocalDateTime());
-                  s.setTipo(rs.getString("tipo"));
-                  s.setCoord_X(rs.getInt("coord_X"));
-                  s.setCoord_Y(rs.getInt("coord_Y"));
-                  s.setDetalle(rs.getString("detalles"));
-                  s.setCodigo(rs.getInt("codigo"));
-                  siniestros.add(s);
+                s.setCodigo(rs.getInt("codigo"));
+                s.setTipo(rs.getString("tipo"));
+                s.setFecha_siniestro(rs.getTimestamp("fecha_siniestro").toLocalDateTime());
+                s.setCoord_X(rs.getInt("coord_X"));
+                s.setCoord_Y(rs.getInt("coord_Y"));
+                s.setDetalle(rs.getString("detalles"));
+                
+                
+
+                Brigada brigada;
+                brigada= bd.buscarBrigada(rs.getInt("codBrigada"));
+                // s.setCodBrigada(rs.getInt("codBrigada"));
+                s.setCodBrigada(brigada);
+                siniestros.add(s);
               }
               ps.close();
           } catch (SQLException ex) {
@@ -129,7 +132,36 @@ public class SiniestroData {
         
 
         
-     
+     public List<Siniestro> listarSiniestros(){
+            List<Siniestro> siniestros = new ArrayList<>();
+            String sql = "SELECT * FROM siniestro;";
+          try {
+              PreparedStatement ps = con.prepareStatement(sql);
+              ResultSet rs = ps.executeQuery();
+              while(rs.next()){
+                  Siniestro s = new Siniestro();
+                s.setCodigo(rs.getInt("codigo"));
+                s.setTipo(rs.getString("tipo"));
+                s.setFecha_siniestro(rs.getTimestamp("fecha_siniestro").toLocalDateTime());
+                s.setCoord_X(rs.getInt("coord_X"));
+                s.setCoord_Y(rs.getInt("coord_Y"));
+                s.setDetalle(rs.getString("detalles"));
+                s.setFecha_resol(rs.getTimestamp("fecha_resol").toLocalDateTime());
+                s.setPuntuacion(rs.getInt("puntuacion"));
+                Brigada brigada = new Brigada();
+                brigada= bd.buscarBrigada(rs.getInt("codBrigada"));
+                // s.setCodBrigada(rs.getInt("codBrigada"));
+                s.setCodBrigada(brigada);
+                siniestros.add(s);
+              }
+              ps.close();
+          } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Siniestro " + ex.getMessage());
+          }
+            
+            return siniestros;
+        }
+
     
 
 }

@@ -203,6 +203,8 @@ public class BrigadaData {
             b.setNro_cuartel(cd.buscarCuartel(rs.getInt("nro_cuartel")));
         }else {
                 JOptionPane.showMessageDialog(null, "No existe el cuartel");
+//                Brigada br = new Brigada();
+//                return br;
                }
         ps.close();
        } catch (SQLException ex) {

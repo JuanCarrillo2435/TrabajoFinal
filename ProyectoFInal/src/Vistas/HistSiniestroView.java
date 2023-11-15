@@ -7,6 +7,7 @@ package Vistas;
 import Data.*;
 import Entidades.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
     
     public HistSiniestroView() {
         initComponents();
+        armarCabecera();
     }
 
     /**
@@ -86,6 +88,11 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
         });
 
         jbLimpiar.setText("Limpiar");
+        jbLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimpiarActionPerformed(evt);
+            }
+        });
 
         jbSalir.setText("Salir");
         jbSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -169,9 +176,15 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
         if (camposVacios()){
             JOptionPane.showMessageDialog(this,"Debes completar Fecha de Inicio y Final");
         }else{
-            //cargarSiniestros();
+            cargarSiniestros();
         }
     }//GEN-LAST:event_jbFiltrarActionPerformed
+
+    private void jbLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimpiarActionPerformed
+        modelo.setRowCount(0);
+        jcInicio.setDate(null);
+        jcFinal.setDate(null);
+    }//GEN-LAST:event_jbLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -209,18 +222,34 @@ public class HistSiniestroView extends javax.swing.JInternalFrame {
         return ( (jcInicio.getDate()==null) || (jcFinal.getDate()==null));
     }
     
-//    private void cargarSiniestros(){
-//        modelo.setRowCount(0);
-//        List<Siniestro> siniestros = new ArrayList();
-//        siniestros = sd.listarSiniestrosResueltos();
-//        LocalDate fi =  jcInicio.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        LocalDate ff =  jcFinal.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//        for(Siniestro s : siniestros){
-//            LocalDate fr = s.getFecha_resol();
+    private void cargarSiniestros(){
+        modelo.setRowCount(0);
+        List<Siniestro> siniestros;
+        List<Siniestro> siniestros2;
+        siniestros = sd.listarSiniestrosResueltos();
+        siniestros2 = sd.listarSiniestrosNOResueltos();
+        LocalDateTime fi =  LocalDateTime.ofInstant(jcInicio.getDate().toInstant(),ZoneId.systemDefault());
+        LocalDateTime ff =  LocalDateTime.ofInstant(jcFinal.getDate().toInstant(),ZoneId.systemDefault());
+
+        for(Siniestro s : siniestros){
+            LocalDateTime fr = s.getFecha_siniestro();
 //            if ((fi.compareTo(fr)>=0) && (fr.compareTo(ff)>=0)){
-//                modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getCodBrigada().getNombre_br(), s.getDetalle(), s.getFecha_siniestro().toString(),s.getPuntuacion(),s.getFecha_resol().toString()});
-//            }
-//        }
-//    }
+            if(fi.isBefore(fr) && ff.isAfter(fr)){
+                
+                modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getCodBrigada().getNombre_br(), s.getDetalle(), (s.getFecha_siniestro().getYear()+"-"+s.getFecha_siniestro().getMonthValue()+"-"+s.getFecha_siniestro().getDayOfMonth()),s.getPuntuacion(),(s.getFecha_resol().getYear()+"-"+s.getFecha_resol().getMonthValue()+"-"+s.getFecha_resol().getDayOfMonth()),"NO",s.getFecha_siniestro().getHour()+":"+s.getFecha_siniestro().getMinute()});
+//                System.out.println(s.getCodBrigada().getNombre_br());
+            }
+        }
+        
+        for(Siniestro s : siniestros2){
+            LocalDateTime fr = s.getFecha_siniestro();
+//            if ((fi.compareTo(fr)>=0) && (fr.compareTo(ff)>=0)){
+            if(fi.isBefore(fr) && ff.isAfter(fr)){
+                
+                modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getCodBrigada().getNombre_br(), s.getDetalle(), (s.getFecha_siniestro().getYear()+"-"+s.getFecha_siniestro().getMonthValue()+"-"+s.getFecha_siniestro().getDayOfMonth()),"-","-","SI",s.getFecha_siniestro().getHour()+":"+s.getFecha_siniestro().getMinute()});
+//                System.out.println(s.getCodBrigada().getNombre_br());
+            }
+        }
+    }
 
 }
