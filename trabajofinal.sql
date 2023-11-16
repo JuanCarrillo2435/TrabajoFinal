@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2023 a las 20:40:14
+-- Tiempo de generación: 16-11-2023 a las 02:31:30
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -37,16 +37,6 @@ CREATE TABLE `bombero` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `bombero`
---
-
-INSERT INTO `bombero` (`id_bombero`, `dni`, `nombre_ape`, `fecha_nac`, `celular`, `codBrigada`, `estado`) VALUES
-(2, '12112121', 'Pedro RompePiedras', '2000-04-12', '2664121333', 3, 1),
-(4, '42744243', 'El chavo del 8', '2000-08-28', '2664288564', 3, 0),
-(6, '42111111', 'Monolo Lamas', '2001-08-12', '2664438564', 3, 1),
-(8, '98998989', 'Roberto Carlos', '1998-11-12', '2664989898', 6, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -61,20 +51,6 @@ CREATE TABLE `brigada` (
   `nro_cuartel` int(11) NOT NULL,
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `brigada`
---
-
-INSERT INTO `brigada` (`codBrigada`, `nombre_br`, `especialidad`, `libre`, `nro_cuartel`, `estado`) VALUES
-(3, 'Alfa', 'Incendios en viviendas, e indu', 1, 1, 1),
-(4, 'Petta', 'Salvamento en derrumbes', 0, 2, 1),
-(6, 'Fitta', 'Operativos de prevención.', 1, 1, 1),
-(7, 'Merma', 'Rescates en ámbito montaña', 0, 2, 1),
-(8, 'Meme', 'Rescates en ámbito montaña', 1, 1, 1),
-(9, 'Mema', 'Rescate de personas atrapadas ', 1, 4, 1),
-(10, 'Mengache', 'Operativos de prevención.', 0, 3, 1),
-(11, 'Lele', 'Socorrer inundaciones', 0, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -93,16 +69,6 @@ CREATE TABLE `cuartel` (
   `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `cuartel`
---
-
-INSERT INTO `cuartel` (`codCuartel`, `nombre_cuartel`, `direccion`, `coord_X`, `coord_Y`, `telefono`, `correo`, `estado`) VALUES
-(1, 'Santa Magdalena', 'Av. Siempre Viva 843', 32, 123, '+ 1555-123-4567', 'cuartelsantarita@gmail.com', 1),
-(2, 'Jesus Maria', 'Av España 123', 12, 32, '2664321221', 'cuartelmariajesus@gmail.com', 1),
-(3, 'Santa Catalina', 'Av Rosas 223', 32, 12, '2664898989', 'scatalina@gmail.com', 1),
-(4, 'San Miguel', 'Balcarce 123', 65, 22, '2664121212', 'estacionsmiguel@gmial.com', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -112,21 +78,14 @@ INSERT INTO `cuartel` (`codCuartel`, `nombre_cuartel`, `direccion`, `coord_X`, `
 CREATE TABLE `siniestro` (
   `codigo` int(11) NOT NULL,
   `tipo` varchar(20) NOT NULL,
-  `fecha_siniestro` date NOT NULL,
+  `fecha_siniestro` datetime NOT NULL,
   `coord_X` int(11) NOT NULL,
   `coord_Y` int(11) NOT NULL,
   `detalles` text NOT NULL,
-  `fecha_resol` date DEFAULT NULL,
+  `fecha_resol` datetime DEFAULT NULL,
   `puntuacion` int(11) DEFAULT NULL,
   `codBrigada` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `siniestro`
---
-
-INSERT INTO `siniestro` (`codigo`, `tipo`, `fecha_siniestro`, `coord_X`, `coord_Y`, `detalles`, `fecha_resol`, `puntuacion`, `codBrigada`) VALUES
-(1, 'Incendio de casa', '2023-03-11', 22, 76, 'Exploto el horno e incendio toda la casa', '2023-03-12', 7, 3);
 
 --
 -- Índices para tablas volcadas
@@ -170,25 +129,25 @@ ALTER TABLE `siniestro`
 -- AUTO_INCREMENT de la tabla `bombero`
 --
 ALTER TABLE `bombero`
-  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_bombero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `brigada`
 --
 ALTER TABLE `brigada`
-  MODIFY `codBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `codBrigada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `cuartel`
 --
 ALTER TABLE `cuartel`
-  MODIFY `codCuartel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `codCuartel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `siniestro`
 --
 ALTER TABLE `siniestro`
-  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
