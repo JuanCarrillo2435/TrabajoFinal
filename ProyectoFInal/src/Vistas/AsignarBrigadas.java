@@ -98,6 +98,12 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Cuartel");
 
+        jCuartel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCuartelActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("Brigada");
 
         jButton2.setText("ASIGNAR BRIGADA");
@@ -196,6 +202,12 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
             jLDistancias.setText("No hay cuarteles disponibles.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCuartelActionPerformed
+        // TODO add your handling code here:
+        listarBrigadas();
+        
+    }//GEN-LAST:event_jCuartelActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

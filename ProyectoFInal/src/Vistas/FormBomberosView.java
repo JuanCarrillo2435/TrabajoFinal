@@ -178,6 +178,12 @@ public boolean IsCellEditable (int fila,int columna){
             }
         });
 
+        jCBbrigada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBbrigadaActionPerformed(evt);
+            }
+        });
+
         jBbuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/lupa.png"))); // NOI18N
         jBbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -391,7 +397,7 @@ try {
     long dni = Long.parseLong(nuevodni);
 
     // Validar que el nombre solo contenga letras
-    if (!nuevonombre.matches("^[a-zA-Z]+$")) {
+    if (!nuevonombre.matches("^[a-zA-Z ]+$")) {
         throw new IllegalArgumentException("El nombre debe contener solo letras.");
     }
 
@@ -532,7 +538,7 @@ try {
 
     // Validar nombre (debería ser solo letras)
     String nombre = jTFnombre_ape.getText();
-    if (!nombre.matches("[a-zA-Z]+")) {
+    if (!nombre.matches("[a-zA-Z ]+")) {
         throw new IllegalArgumentException("El nombre debe contener solo letras.");
     }
 
@@ -682,6 +688,11 @@ try {
             }
         }
     }//GEN-LAST:event_jTFnombre_apeKeyReleased
+
+    private void jCBbrigadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBbrigadaActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jCBbrigadaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
