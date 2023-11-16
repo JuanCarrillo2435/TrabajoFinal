@@ -31,19 +31,19 @@ import javax.swing.table.TableRowSorter;
  * @author Fran
  */
 public class FormBomberosView extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo = new DefaultTableModel();
-public boolean IsCellEditable (int fila,int columna){
-    return false;
-}
-    /**
-     * Creates new form FormBomberosView
-     */
+private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
+    
     public FormBomberosView() {
         initComponents();
         armarCabecera();
         bucle();
         armarCBbrigadas();
         limpiar();
+        
         
     }
 
@@ -571,7 +571,7 @@ try {
                 BomberosData databomb = new BomberosData();
                 if (chequearBrigadas(bombero)==5) {
                     JOptionPane.showMessageDialog(null, " No se pueden añadir mas bomberos a esta brigada.", "Error", JOptionPane.ERROR_MESSAGE);
-                }else if(chequearBrigadas(bombero)>1){
+                }else if(chequearBrigadas(bombero)>=1){
                     JOptionPane.showMessageDialog(null, "Brigada habilitada");
                     databomb.CrearBombero(bombero);
                 }else if(chequearBrigadas(bombero) == 0){

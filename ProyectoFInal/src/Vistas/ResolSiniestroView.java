@@ -183,16 +183,21 @@ public class ResolSiniestroView extends javax.swing.JInternalFrame {
                 siniestro.setDetalle(String.valueOf(jTableSiniestro.getValueAt(jTableSiniestro.getSelectedRow(), 5)));
                 siniestro.setPuntuacion(Integer.parseInt(jcBoxPuntos.getSelectedItem().toString()));
 
-                // Guardar el siniestro
-                sd.completarSiniestro(siniestro);
-                cargarSiniestros();
+                // Después de parsear las fechas
+                if (fechaResolucion.isBefore(fechaSiniestro)) {
+                    JOptionPane.showMessageDialog(this, "La fecha de resolución debe ser posterior a la fecha de siniestro");
+                } else {
+                    // El código existente para guardar el siniestro si la validación es exitosa
+                    sd.completarSiniestro(siniestro);
+                    cargarSiniestros();
+                }
             } catch (DateTimeParseException | NumberFormatException ex) {
                 String mensajeError = "Error en el formato de fecha u hora. Asegúrate de seleccionar valores válidos.\n"
-                    + "Mensaje de error: " + ex.getMessage() + "\n"
-                    + "Línea donde ocurrió el error: " + ex.getStackTrace()[0].getLineNumber();
-            
-            JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace(); // Opcional: Imprimir la traza de la excepción para depuración
+                        + "Mensaje de error: " + ex.getMessage() + "\n"
+                        + "Línea donde ocurrió el error: " + ex.getStackTrace()[0].getLineNumber();
+
+                JOptionPane.showMessageDialog(this, mensajeError, "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace(); // Opcional: Imprimir la traza de la excepción para depuración
             }
         }
 

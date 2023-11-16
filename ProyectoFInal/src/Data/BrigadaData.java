@@ -84,7 +84,7 @@ public class BrigadaData {
     public List<Brigada> brigadasLibres(){
         List<Brigada> disponibles = new ArrayList();
         
-        String sql ="SELECT * FROM `brigada` WHERE libre = 1 AND estado = 1 ";
+        String sql ="SELECT * FROM `brigada` WHERE libre = 1 ";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();
