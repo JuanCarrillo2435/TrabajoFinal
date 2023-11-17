@@ -8,6 +8,7 @@ import Entidades.Cuartel;
 import Entidades.Siniestro;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AsignarBrigadas extends javax.swing.JInternalFrame {
@@ -30,23 +31,25 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         }
     };
 
-    public AsignarBrigadas() {
-        initComponents();
-        listarCuarteles();
-        listarBrigadas();
-        armarCabecera();
-        llenarTabla();
-        cuartelData = new CuartelData();
-        asignarBri = new SiniestroData();  // O cualquier otra forma de inicialización que sea necesaria
+   public AsignarBrigadas() {
+    initComponents();
+    borrarFila();
+    listarCuarteles();
+    listarBrigadas();
+    armarCabecera();
+    llenarTabla();
 
-        jTable1.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = jTable1.getSelectedRow();
-                int columnCodigo = 0; // Ajusta este índice según la posición de la columna de código en tu modelo de tabla
-                // Obtener el código del siniestro de la fila seleccionada
+    cuartelData = new CuartelData();
+    asignarBri = new SiniestroData();  // O cualquier otra forma de inicialización que sea necesaria
+
+    jTable1.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            int selectedRow = jTable1.getSelectedRow();
+            int columnCodigo = 0; // Ajusta este índice según la posición de la columna de código en tu modelo de tabla
+
+            if (selectedRow >= 0) {
+                // Si hay una fila seleccionada, obtén los valores de esa fila
                 codigoSiniestroSeleccionado = (int) jTable1.getValueAt(selectedRow, columnCodigo);
-
-                // Obtener valores de X e Y de la fila seleccionada
                 int columnX = 2; // Ajusta este índice según la posición de la columna X en tu modelo de tabla
                 int columnY = 3; // Ajusta este índice según la posición de la columna Y en tu modelo de tabla
                 int coordX = (int) jTable1.getValueAt(selectedRow, columnX);
@@ -56,12 +59,14 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
                 // Mostrar las coordenadas y el código del siniestro seleccionado
                 System.out.println("Coordenadas seleccionadas: X=" + coordX + ", Y=" + coordY);
                 System.out.println("Código del siniestro seleccionado: " + codigoSiniestroSeleccionado);
+            } else {
+                // Si no hay una fila seleccionada, muestra un mensaje indicando que no hay selección
+                System.out.println("No hay fila seleccionada");
             }
-        });
-        //brigadaSeleccionada = (Brigada) jCBrigada.getSelectedItem();
-        // codigoBrigada = brigadaSeleccionada.getCodBrigada();
+        }
+    });
+}
 
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -177,13 +182,14 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         try {
             Brigada brigadaSeleccionada = (Brigada) jCBrigada.getSelectedItem();
 
-            if (brigadaSeleccionada != null) {
+            if (cuartelCercano != null) {
                 asignarBri.asignarBrigadaASiniestro(brigadaSeleccionada, codigoSiniestroSeleccionado);
-                System.out.println("Se asignó la brigada al siniestro exitosamente.");
-
+                JOptionPane.showMessageDialog(null, "Se asignó la brigada al siniestro exitosamente.");
+                armarTabla();
                 // Resto de tu lógica...
+
             } else {
-                System.out.println("Seleccione una brigada de la lista.");
+                JOptionPane.showMessageDialog(null, "Seleccione una brigada de la lista.");
             }
         } catch (Exception e) {
             e.printStackTrace(); // Manejo básico de excepciones. Considera un manejo más robusto en un entorno de producción.
@@ -206,7 +212,7 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
     private void jCuartelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCuartelActionPerformed
         // TODO add your handling code here:
         listarBrigadas();
-        
+
     }//GEN-LAST:event_jCuartelActionPerformed
 
 
@@ -247,6 +253,13 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         }
     }
 
+    private void borrarFila() {
+        int ind = modelo.getRowCount() - 1;
+        for (int i = ind; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+
     private void armarCabecera() {
         modelo.addColumn("Codigo");
         modelo.addColumn("Tipo");
@@ -257,8 +270,13 @@ public class AsignarBrigadas extends javax.swing.JInternalFrame {
         jTable1.setModel(modelo);
     }
 
+    private void armarTabla() {
+        //armarCabecera();
+        llenarTabla();
+    }
+
     private void llenarTabla() {
-        List<Siniestro> siniestrosIn = sd.listarSiniestrosNOResueltos();
+        List<Siniestro> siniestrosIn = sd.listarSiniestrosNOResueltosSinBrigada();
         modelo.setRowCount(0);
         for (Siniestro s : siniestrosIn) {
             modelo.addRow(new Object[]{s.getCodigo(), s.getTipo(), s.getCoord_X(), s.getCoord_Y(), s.getDetalle()});

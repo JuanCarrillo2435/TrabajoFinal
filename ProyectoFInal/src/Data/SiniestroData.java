@@ -97,6 +97,33 @@ public class SiniestroData {
 
         return siniestros;
     }
+        public List<Siniestro> listarSiniestrosNOResueltosSinBrigada() {
+        List<Siniestro> siniestros = new ArrayList<>();
+        String sql = "SELECT * FROM siniestro WHERE codBrigada IS NULL";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Siniestro s = new Siniestro();
+                //s.setCodBrigada(rs.getInt("codigo"));
+                Brigada brigada = new Brigada();
+                brigada = bd.buscarBrigada(rs.getInt("codBrigada"));
+                s.setCodBrigada(brigada);
+                s.setFecha_siniestro(rs.getTimestamp("fecha_siniestro").toLocalDateTime());
+                s.setTipo(rs.getString("tipo"));
+                s.setCoord_X(rs.getInt("coord_X"));
+                s.setCoord_Y(rs.getInt("coord_Y"));
+                s.setDetalle(rs.getString("detalles"));
+                s.setCodigo(rs.getInt("codigo"));
+                siniestros.add(s);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Siniestro " + ex.getMessage());
+        }
+
+        return siniestros;
+    }
 
     public List<Siniestro> listarSiniestrosNOResueltos() {
         List<Siniestro> siniestros = new ArrayList<>();
@@ -142,7 +169,7 @@ public class SiniestroData {
 
             // Verificar si la actualización fue exitosa
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "\"Se asignó la brigada al siniestro exitosamente.\"");
+                //JOptionPane.showMessageDialog(null, "\"Se asignó la brigada al siniestro exitosamente.\"");
             } else {
                 System.out.println("No se pudo asignar la brigada al siniestro.");
             }
@@ -154,5 +181,6 @@ public class SiniestroData {
             e.printStackTrace(); // Manejo básico de excepciones. Considera un manejo más robusto en un entorno de producción.
         }
     }
+    
 
 }
