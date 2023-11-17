@@ -54,7 +54,7 @@ public class BrigadaData {
     public List<Brigada> listarBrigadas(){
         List<Brigada> disponibles = new ArrayList();
         
-        String sql ="SELECT * FROM `brigada` WHERE estado = 1";
+        String sql ="SELECT * FROM `brigada`";
         try{
          PreparedStatement ps= con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
          ResultSet rs = ps.executeQuery();

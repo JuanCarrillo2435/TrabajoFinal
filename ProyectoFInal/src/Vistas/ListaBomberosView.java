@@ -221,7 +221,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
   private void armarCBbrigadas(){
         // LISTAR BRIGADAS LIBRES
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
+        List<Brigada> buscar2 = brigada.listarBrigadas();
     
     if (buscar2 != null) {
         for (int i = 0; i < buscar2.size(); i++) {
@@ -244,7 +244,7 @@ private DefaultTableModel modelo = new DefaultTableModel() {
             BomberosData bombero = new BomberosData();  
     TreeSet<Bomberos> bomberos = bombero.listarBomberos();
     BrigadaData brigada = new BrigadaData();
-    List<Brigada> buscar2 = brigada.brigadasLibres();
+    List<Brigada> buscar2 = brigada.listarBrigadas();
     String comboitem = (String) jCBfiltrobrigada.getSelectedItem();
     
     

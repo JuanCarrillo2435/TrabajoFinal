@@ -415,7 +415,7 @@ try {
 
     // Resto del código
     BrigadaData brigada = new BrigadaData();
-    List<Brigada> buscar2 = brigada.brigadasLibres();
+    List<Brigada> buscar2 = brigada.listarBrigadas();
 
     for (Brigada brii : buscar2) {
         if (brii.getNombre_br().equals(jCBbrigada.getSelectedItem())) {
@@ -557,7 +557,7 @@ try {
     boolean estado = true;
     // Obtener el valor del combo box
     BrigadaData brigada = new BrigadaData();
-    List<Brigada> brigadasLibres = brigada.brigadasLibres();
+    List<Brigada> brigadasLibres = brigada.listarBrigadas();
 
     // Validar que la brigada seleccionada sea válida
     if (jCBbrigada.getSelectedItem() != null) {
@@ -745,7 +745,7 @@ try {
         BomberosData bombero = new BomberosData();  
         TreeSet<Bomberos> bomberos = bombero.listarBomberos();
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
+        List<Brigada> buscar2 = brigada.listarBrigadas();
         
         for (Bomberos bom : bomberos) {
             Brigada brigas = bom.getCodBrigada();
@@ -774,7 +774,7 @@ try {
          private void armarCBbrigadas(){
         // LISTAR BRIGADAS LIBRES
         BrigadaData brigada = new BrigadaData();
-        List<Brigada> buscar2 = brigada.brigadasLibres();
+        List<Brigada> buscar2 = brigada.listarBrigadas();
     
     if (buscar2 != null) {
         for (int i = 0; i < buscar2.size(); i++) {
