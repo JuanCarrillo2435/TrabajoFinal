@@ -201,8 +201,8 @@ public class BrigadaData {
             b.setLibre(rs.getBoolean("libre"));
             b.setEstado(rs.getBoolean("estado"));
             b.setNro_cuartel(cd.buscarCuartel(rs.getInt("nro_cuartel")));
-        }else {
-                JOptionPane.showMessageDialog(null, "No existe el cuartel");
+//        }else {
+//                JOptionPane.showMessageDialog(null, "No existe el cuartel");
 //                Brigada br = new Brigada();
 //                return br;
                }
